@@ -9,14 +9,13 @@ router.get("/", async (req, res) => {
   res.send(users);
 });
 
-router.get("/:id", async (req, res) => {
-  const user = await User.find(req.params.id);
-  if (!user)
-    return res.status(404).send("The user with the given id was not found");
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+
   res.send(user);
 });
 
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -29,6 +28,7 @@ router.post("/", auth, async (req, res) => {
     bio: req.body.bio,
     password: req.body.password
   });
+
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
 

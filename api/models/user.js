@@ -22,15 +22,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 5,
     maxlength: 255,
-    required: true,
     unique: true
   },
   bio: String
 });
+
 userSchema.methods.generateAuthToken = function() {
-  return jwt.sign({ _id: this._id }, config.get("jwtPrivateKey"));
+  return jwt.sign(
+    { _id: this._id, name: this.name },
+    config.get("jwtPrivateKey")
+  );
 };
-//userSchema.plugin(uniqueValidator, { message: "is already taken" });
 
 function validateUser(user) {
   const schema = {
