@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300");
+
+#soYumMain {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #e8e7e7;
+  justify-content: space-between;
+  height: auto;
+}
+.soYumName {
+  font-family: "Pacifico", cursive;
+  margin: 0 0 0 20px;
+  color: #f97720;
+  font-size: 60px;
+}
+
+.navBar,
+#searchBar {
+  padding-top: 45px;
+  margin-right: 55px;
+}
+
+.navLink {
+  font-family: "IBM Plex Sans", sans-serif;
+  color: black;
+  text-decoration: none;
+  margin-left: 50px;
+  font-size: 25px;
+}

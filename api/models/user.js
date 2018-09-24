@@ -1,19 +1,17 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    lowercase: true,
     required: [true, "can't be blank"],
-    unique: true,
     minlength: 5,
-    maxlength: 50,
-    match: [/^[a-zA-Z0-9]+$/, "is invalid"]
+    maxlength: 50
   },
   email: {
     type: String,
-    lowercase: true,
     required: [true, "can't be blank"],
     minlength: 5,
     maxlength: 255,
@@ -29,7 +27,9 @@ const userSchema = new mongoose.Schema({
   },
   bio: String
 });
-
+userSchema.methods.generateAuthToken = function() {
+  return jwt.sign({ _id: this._id }, config.get("jwtPrivateKey"));
+};
 //userSchema.plugin(uniqueValidator, { message: "is already taken" });
 
 function validateUser(user) {

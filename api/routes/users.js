@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const joi = require("joi");
-const mongoose = require("mongoose");
 const { User, validateUser } = require("../models/user");
+const auth = require("../middleware/auth");
 
 router.get("/", async (req, res) => {
   const users = await User.find();
@@ -17,7 +16,7 @@ router.get("/:id", async (req, res) => {
   res.send(user);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -34,8 +33,9 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
 
   await user.save();
+  const token = user.generateAuthToken();
 
-  res.send({
+  res.header("x-auth-token", token).send({
     name: user.name,
     email: user.email
   });
