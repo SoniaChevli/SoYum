@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import NavBar from "./components/navBar";
+import UserNavBar from "./components/usersNavBar";
 import SearchBar from "./components/searchBar";
 import "./styles/soYumHeader.css";
+
+let signedIn = localStorage.getItem("jwtToken");
 
 class SoYumHeader extends Component {
   render() {
@@ -9,7 +12,7 @@ class SoYumHeader extends Component {
       <div id="soYumMain">
         <h1 className="soYumName">SoYum</h1>
         <br />
-        <NavBar />
+        {signedIn ? <UserNavBar /> : <NavBar />}
       </div>
     );
   }

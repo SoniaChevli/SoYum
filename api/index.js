@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const users = require("./routes/users");
 const photos = require("./routes/photos");
 const auth = require("./routes/auth");
+const allowCrossDomain = require("./middleware/allowCrossDomain");
 const app = express();
 const config = require("config");
 
@@ -22,6 +23,7 @@ mongoose
 app.use(express.json()); //if there is json in the req it will populate req.body
 app.use(express.urlencoded({ extended: true })); //parses a key=value format and will populate req.body
 app.use(express.static("public")); //this allows us to serve static content (folder is called public)
+app.use(allowCrossDomain);
 app.use(helmet());
 app.use("/api/users", users);
 app.use("/api/auth", auth);

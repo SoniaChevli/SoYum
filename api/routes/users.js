@@ -4,14 +4,13 @@ const bcrypt = require("bcrypt");
 const { User, validateUser } = require("../models/user");
 const auth = require("../middleware/auth");
 
-router.get("/", async (req, res) => {
-  const users = await User.find();
-  res.send(users);
-});
-
 router.get("/me", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
+  res.send(user);
+});
 
+router.get("/", async (req, res) => {
+  const user = await User.find();
   res.send(user);
 });
 

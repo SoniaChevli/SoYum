@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/soYumHeader.css";
-import dot from "../icons/circle.png";
 
 class NavBar extends Component {
   state = {};
@@ -11,15 +10,11 @@ class NavBar extends Component {
         <NavLink to="main" className="navLink">
           Home
         </NavLink>
-
-        <NavLink to="newImage" className="navLink">
-          Add Image
+        <NavLink to="login" className="navLink">
+          Login{" "}
         </NavLink>
-        <NavLink to="favorites" className="navLink">
-          Favorites
-        </NavLink>
-        <NavLink to="profile" className="navLink">
-          Profile
+        <NavLink to="newUser" className="navLink">
+          Create Account{" "}
         </NavLink>
       </div>
     );
