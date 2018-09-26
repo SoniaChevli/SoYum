@@ -1,0 +1,39 @@
+.loginForm,
+.newUser,
+.newImage {
+  margin: 0 auto;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+h1 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 45px;
+  float: left;
+}
+
+label {
+  display: block;
+}
+
+#submitButton {
+  cursor: pointer;
+  font-family: "IBM Plex Sans", sans-serif;
+  background-color: white;
+  border: 1px solid black;
+  margin-top: 30px;
+  padding: 10px 28px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  width: 150px;
+}
+
+#submitButton:hover {
+  background-color: #f97720;
+  border: 0;
+}
