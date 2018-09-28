@@ -1,0 +1,12 @@
+.photoPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#photoPageImage {
+  width: 300px;
+  height: 300px;
+  margin: 10px;
+  object-fit: cover;
+}

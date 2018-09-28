@@ -1,0 +1,48 @@
+#dropDown {
+  width: 300px;
+  font-size: 14px;
+  font-family: "IBM Plex Sans", sans-serif;
+  border: 1px solid #e1dfdf;
+  margin-bottom: 20px;
+  margin-left: 100px;
+}
+
+#dropDown:hover {
+  box-shadow: 0 0 5px #f97720;
+  border: 0;
+  cursor: pointer;
+}
+#dropDown:focus {
+  outline: none;
+}
+
+#downArrow {
+  height: 24px;
+}
+
+.menu {
+  background-color: #f9dfce;
+  opacity: 0.95;
+  width: 300px;
+  position: absolute;
+  border-top: 0;
+  margin-top: -12px;
+  margin-left: 100px;
+  margin-bottom: 100px;
+  overflow: hidden;
+  box-shadow: 0 0 5px #f97720;
+  padding: 3px 0px 3px 3px;
+  border: 0;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  width: 300px;
+  margin-left: -20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px;
+  padding-left: 20px;
+}
