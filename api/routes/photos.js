@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const photo = await Photo.find(req.params.id);
+  const photo = await Photo.findById(req.params.id);
   if (!photo)
     return res.status(404).send("The photo with the given id was not found");
   res.send(photo);
@@ -21,7 +21,8 @@ router.post("/", auth, async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   let photo = new Photo({
-    restaurant: req.body.restaurant,
+    restaurantName: req.body.restaurantName,
+    restaurantLink: req.body.restaurantLink,
     photo: req.body.photo,
     author: { _id: req.user._id, name: req.user.name },
     city: req.body.city,

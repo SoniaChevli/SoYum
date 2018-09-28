@@ -4,11 +4,16 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 const photoSchema = new mongoose.Schema({
-  restaurant: {
+  restaurantName: {
     type: String,
     required: [true, "can't be blank"],
     minlength: 1,
     maxlength: 50
+  },
+  restaurantLink: {
+    type: String,
+    minlength: 1,
+    maxlength: 200
   },
   author: {
     _id: {
@@ -36,10 +41,13 @@ const photoSchema = new mongoose.Schema({
 
 function validatePhoto(photo) {
   const schema = {
-    restaurant: Joi.string()
+    restaurantName: Joi.string()
       .min(1)
       .max(50)
       .required(),
+    restaurantLink: Joi.string()
+      .min(1)
+      .max(50),
     author: Joi.string(),
     city: Joi.string().required(),
     description: Joi.string(),
