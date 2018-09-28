@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import NavBar from "./components/navBar";
 import UserNavBar from "./components/usersNavBar";
-import SearchBar from "./components/searchBar";
 import "./styles/soYumHeader.css";
 
 let signedIn = localStorage.getItem("jwtToken");

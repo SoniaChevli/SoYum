@@ -1,4 +1,53 @@
-#searchBar {
-  width: 500px;
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0 auto;
+}
+
+#searchBar {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+}
+
+#imageTags {
+  display: flex;
+  flex-direction: row;
+  margin-left: -100px;
+}
+
+#searchButton {
+  margin-top: 4px;
+  width: 100px;
+  height: 28px;
+
+  background: 0;
+  border: 1px solid black;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 16px;
+}
+
+#searchButton:hover {
+  background: #f97720;
+  border: 0;
+  cursor: pointer;
+}
+
+img[name="mainPagePhotos"] {
+  width: 300px;
+  height: 300px;
+  margin: 10px;
+  object-fit: cover;
+}
+img[name="mainPagePhotos"]:hover {
+  cursor: pointer;
+}
+
+.allImages {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: inline-block;
 }

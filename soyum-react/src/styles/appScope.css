@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 100px;
+}
+
 input[name="password"],
 input[name="email"],
 input[type="text"] {
@@ -52,5 +56,3 @@ input[type="email"] {
   margin: 5px 1px 3px 0px;
   border: 1px solid #dddddd;
 }
-
-
