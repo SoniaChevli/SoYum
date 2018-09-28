@@ -1,13 +1,57 @@
 import React, { Component } from "react";
-import SearchBar from "./components/searchBar";
+import axios from "axios";
+import "./styles/mainPage.css";
+
+const apiEndPoint = "http://localhost:3000/api/photos";
+
 class MainPage extends Component {
-  state = {};
-  render() {
+  state = {
+    data: [],
+    tmp: "hi"
+  };
+
+  componentWillMount() {
+    axios
+      .get(apiEndPoint)
+      .then(res => {
+        console.log("RES", res.data);
+        const data = res.data;
+        this.setState({ data });
+        console.log("DATA", this.state.data);
+      })
+      .catch(err => {
+        console.log("ERR", err);
+      });
+  }
+  redirectToTarget = id => {
+    this.props.history.push("/" + id);
+  };
+
+  handleImages = d => {
     return (
-      <div>
+      <img
+        name="mainPagePhotos"
+        src={d.photo}
+        id={d._id}
+        author={d.author._id}
+        alt=""
+        onClick={() => this.redirectToTarget(d._id)}
+      />
+    );
+  };
+  render() {
+    console.log("DATA", this.state.data);
+
+    return (
+      <div className="mainPage">
         {" "}
-        <SearchBar />
-        <h1> THE IMAGES WILL GO HERE </h1>
+        <div id="searchBar">
+          <input type="text" placeholder="Search for a city" />
+          <button id="searchButton">Search </button>
+        </div>
+        <div className="allImages">
+          {this.state.data.map(d => this.handleImages(d))}
+        </div>
       </div>
     );
   }
