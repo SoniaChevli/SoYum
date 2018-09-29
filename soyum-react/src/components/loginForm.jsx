@@ -16,8 +16,8 @@ class LoginForm extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    console.log("SUBMITTED", this.state);
     const obj = this.state;
+
     const response = await axios.post(apiEndPoint, obj).catch(error => {
       console.log("ERROR", error.response);
       // console.log(error.response.data);
@@ -30,15 +30,17 @@ class LoginForm extends Component {
     });
     if (response) {
       console.log("response");
-      localStorage.setItem("jwtToken", response.data);
-      this.props.history.push("/");
+      await localStorage.setItem("jwtToken", response.data);
+      window.location.reload(true);
+      await this.props.history.push("/");
     }
   };
 
   handleChange = e => {
     const attr = e.target.name;
+
     this.setState({ [attr]: e.target.value });
-    console.log(this.state);
+    console.log("HERE", this.state);
   };
 
   render() {

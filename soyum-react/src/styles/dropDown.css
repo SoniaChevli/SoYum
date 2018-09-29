@@ -7,12 +7,14 @@
   margin-left: 100px;
 }
 
-#dropDown:hover {
+#dropDown:hover,
+#mainDropDown:hover {
   box-shadow: 0 0 5px #f97720;
   border: 0;
   cursor: pointer;
 }
-#dropDown:focus {
+#dropDown:focus,
+#mainDropDown:focus {
   outline: none;
 }
 
@@ -45,4 +47,25 @@ li {
   margin-bottom: 15px;
   border-bottom: 1px;
   padding-left: 20px;
+}
+#mainDropDown {
+  width: 300px;
+  font-size: 14px;
+  font-family: "IBM Plex Sans", sans-serif;
+  border: 1px solid #e1dfdf;
+  padding-left: 20px;
+}
+
+.mainMenu {
+  background-color: #f9dfce;
+  opacity: 0.95;
+  width: 300px;
+  position: absolute;
+  border-top: 0;
+  font-family: "IBM Plex Sans", sans-serif;
+  margin-bottom: 100px;
+  overflow: hidden;
+  box-shadow: 0 0 5px #f97720;
+  padding: 3px 0px 3px 3px;
+  border: 0;
 }

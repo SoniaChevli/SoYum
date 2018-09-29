@@ -7,6 +7,7 @@ class UserNavBar extends Component {
   handleLogout = () => {
     localStorage.removeItem("jwtToken");
     alert("You have been logged out!");
+    window.location.reload(true);
     console.log(this.props);
   };
   render() {

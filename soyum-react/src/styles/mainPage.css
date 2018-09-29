@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+  margin-top: 50px;
 }
 
 #searchBar {
@@ -10,7 +11,10 @@
   display: flex;
   flex-direction: row;
 }
-
+#searchInput {
+  height: 100%;
+  font-size: 25px;
+}
 #imageTags {
   display: flex;
   flex-direction: row;
@@ -18,10 +22,10 @@
 }
 
 #searchButton {
-  margin-top: 4px;
-  width: 100px;
-  height: 28px;
-
+  margin-top: 6px;
+  width: 94px;
+  height: 40px;
+  position: absolute;
   background: 0;
   border: 1px solid black;
   font-family: "IBM Plex Sans", sans-serif;
@@ -30,7 +34,9 @@
 
 #searchButton:hover {
   background: #f97720;
+
   border: 0;
+
   cursor: pointer;
 }
 
@@ -42,6 +48,11 @@ img[name="mainPagePhotos"] {
 }
 img[name="mainPagePhotos"]:hover {
   cursor: pointer;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  padding-bottom: 4px;
+  margin-top: 6px;
 }
 
 .allImages {
@@ -50,4 +61,9 @@ img[name="mainPagePhotos"]:hover {
   margin: 0 auto;
   margin-top: 20px;
   display: inline-block;
+}
+
+#filterChoices {
+  display: flex;
+  flex-direction: row;
 }

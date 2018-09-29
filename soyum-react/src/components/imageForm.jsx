@@ -18,7 +18,9 @@ class ImageForm extends Component {
     selectedFile: null,
     imagePreview: "",
     toggledTags: [],
-    data: {}
+    data: {
+      tags: {}
+    }
   };
 
   handleChange = async e => {
@@ -87,7 +89,7 @@ class ImageForm extends Component {
     console.log("Handle Toggled Tags", e);
 
     console.log("D", d);
-    const selectedElements = [...this.state.toggledTags];
+    const selectedElements = [...this.state.data.tags];
     if (!selectedElements.includes(d)) {
       selectedElements.push(d);
     } else {
@@ -96,10 +98,11 @@ class ImageForm extends Component {
       selectedElements.splice(index, 1);
     }
     console.log("SELECTED", selectedElements);
+    const data = { ...this.state.data };
+    data["tags"] = selectedElements;
+    await this.setState({ data });
 
-    await this.setState({ toggledTags: selectedElements });
-
-    console.log("DATA", this.state.toggledTags);
+    console.log("DATA", this.state.data.tags);
   };
 
   displaySelected = () => {};
@@ -137,6 +140,7 @@ class ImageForm extends Component {
             type="text"
             name="restaurantName"
             _id="restaurantName"
+            placeholder="In-N-Out, Miss Saigon, Papalote..."
             handleChange={this.handleChange}
           />
           <Input
@@ -144,6 +148,7 @@ class ImageForm extends Component {
             type="text"
             name="restaurantLink"
             _id="restaurantName"
+            placeholder="Not Required"
             handleChange={this.handleChange}
           />
           <Input
@@ -151,6 +156,7 @@ class ImageForm extends Component {
             type="text"
             name="city"
             _id="city"
+            placeholder="Buffalo, San Francisco, New York..."
             handleChange={this.handleChange}
           />
 
@@ -165,13 +171,15 @@ class ImageForm extends Component {
           <div className="tagBox">
             <div className="addTags"> Add Tags: </div>
             <DropdownMenu
-              id="dropDown"
+              buttonId="dropDown"
+              menuId="menu"
               menuItems={restrictionTags}
               label="Food Restrictions"
               handleSelect={this.handleToggledTags}
             />
             <DropdownMenu
-              id="dropDown"
+              buttonId="dropDown"
+              menuId="menu"
               menuItems={countryTags}
               label="Food Type"
               handleSelect={this.handleToggledTags}

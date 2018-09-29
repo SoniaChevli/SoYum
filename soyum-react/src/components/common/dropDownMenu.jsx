@@ -19,12 +19,16 @@ class DropdownMenu extends Component {
   };
 
   closeMenu = e => {
-    if (!this.dropdownMenu.contains(e.target)) {
-      this.setState({ showMenu: false }, () => {
-        this.setState({ buttonColor: "white" });
+    try {
+      if (!this.dropdownMenu.contains(e.target)) {
+        this.setState({ showMenu: false }, () => {
+          this.setState({ buttonColor: "white" });
 
-        document.removeEventListener("click", this.closeMenu);
-      });
+          document.removeEventListener("click", this.closeMenu);
+        });
+      }
+    } catch (err) {
+      console.log("ERROR", err);
     }
   };
 
@@ -32,7 +36,7 @@ class DropdownMenu extends Component {
     return (
       <div>
         <button
-          id="dropDown"
+          id={this.props.buttonId}
           onClick={this.showMenu}
           style={{ backgroundColor: this.state.buttonColor }}
         >
@@ -41,7 +45,7 @@ class DropdownMenu extends Component {
         </button>
         {this.state.showMenu ? (
           <div
-            className="menu"
+            className={this.props.menuId}
             ref={element => {
               this.dropdownMenu = element;
             }}
