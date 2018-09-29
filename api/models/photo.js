@@ -51,6 +51,7 @@ function validatePhoto(photo) {
     author: Joi.string(),
     city: Joi.string().required(),
     description: Joi.string(),
+    tags: Joi.array(),
     photo: Joi.string().required()
   };
 

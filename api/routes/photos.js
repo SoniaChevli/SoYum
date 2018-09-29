@@ -5,8 +5,32 @@ const { photoSchema, Photo, validatePhoto } = require("../models/photo");
 const auth = require("../middleware/auth");
 
 router.get("/", async (req, res) => {
-  const photos = await Photo.find();
-  res.send(photos);
+  let searchTags = req.query.tags;
+  let searchCity = req.query.city;
+
+  if (searchTags && searchCity) {
+    let photos = await Photo.find({
+      tags: { $all: searchTags }
+    }).sort({ created_at: -1 });
+    photos = await photos.filter(
+      c => c.city.toLowerCase() === searchCity.toLowerCase()
+    );
+    res.send(photos);
+  } else if (searchTags) {
+    const photos = await Photo.find({
+      tags: { $all: searchTags }
+    });
+    res.send(photos);
+  } else if (searchCity) {
+    searchCity = new RegExp(searchCity, "i");
+    const photos = await Photo.find({ city: searchCity }).sort({
+      created_at: -1
+    });
+    res.send(photos);
+  } else {
+    const photos = await Photo.find().sort({ created_at: -1 });
+    res.send(photos);
+  }
 });
 
 router.get("/:id", async (req, res) => {
