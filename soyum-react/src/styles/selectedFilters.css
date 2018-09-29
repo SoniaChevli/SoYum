@@ -1,0 +1,47 @@
+#filtersSelectedTitle {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#filtersSelectedList {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 16px;
+  margin: auto;
+  margin-left: 15px;
+}
+
+#selectedFilters {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+#resetButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+}
+#resetFilters,
+#resetAll {
+  background: 0;
+  border: 0;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 24px;
+  text-decoration: underline;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+}
+
+#resetFilters:hover,
+#resetAll:hover {
+  cursor: pointer;
+  font-size: 26px;
+  color: #f97720;
+}
+#resetFilters:focus,
+#resetAll:focus {
+  outline: none;
+}
