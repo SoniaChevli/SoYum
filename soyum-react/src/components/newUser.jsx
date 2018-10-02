@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import Input from "./common/input";
+import ImageUpload from "./common/imageUpload";
 import axios from "axios";
 import "../styles/form.css";
 
 const apiEndPointNewUser = "http://localhost:3000/api/users";
+const cloudinaryURL = "https://api.cloudinary.com/v1_1/dszdk19ok/upload";
+let CLOUDINARY_UPLOAD_PRESET = "dtjzjz65";
 
 class NewUser extends Component {
   state = {
-    name: "",
+    userName: "",
     email: "",
-    password: ""
+    password: "",
+    profilePhoto: undefined
   };
 
   handleSubmit = async e => {
@@ -31,15 +35,41 @@ class NewUser extends Component {
     this.setState({ [attr]: e.target.value });
   };
 
+  fileSelectorHandler = async e => {
+    console.log("e", e.target.files[0]);
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    let response = await axios({
+      url: cloudinaryURL,
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      data: formData
+    }).catch(function(err) {
+      console.log("ERR", err);
+    });
+    try {
+      console.log("RESPONSE", response);
+      await this.setState({ profilePhoto: response.data.secure_url });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     return (
       <div className="newUser">
         <h1>Create Account </h1>
         <form onSubmit={this.handleSubmit}>
+          <ImageUpload
+            fileSelectorHandler={this.fileSelectorHandler}
+            imagePreview={this.state.profilePhoto}
+          />
           <Input
-            label="Name:"
+            label="Username:"
             type="text"
-            name="name"
+            name="userName"
             handleChange={this.handleChange}
           />
           <Input
@@ -54,6 +84,17 @@ class NewUser extends Component {
             name="password"
             handleChange={this.handleChange}
           />
+          <label className="userBio">
+            {" "}
+            Bio:
+            <br />
+            <textarea
+              id="userBio"
+              name="bio"
+              onChange={this.handleChange}
+              placeholder="Not Required"
+            />
+          </label>
 
           <button id="submitButton" type="submit">
             Create

@@ -2,16 +2,19 @@ import React, { Component } from "react";
 import Input from "./common/input";
 import { Redirect } from "react-router-dom";
 import DropdownMenu from "./common/dropDownMenu";
+import ImageUpload from "./common/imageUpload";
+import MessageBox from "./common/messageBox";
+import ReactLoading from "react-loading";
 import "../styles/imageForm.css";
 import "../styles/appScope.css";
 import "../styles/form.css";
 import { restrictionTags, countryTags } from "../data/foodTags";
-import uploadSymbol from "../icons/upload-symbol.png";
+
 import axios from "axios";
 
+const apiEndPoint = "http://localhost:3000/api/photos";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dszdk19ok/upload";
 let CLOUDINARY_UPLOAD_PRESET = "dtjzjz65";
-const apiEndPoint = "http://localhost:3000/api/photos";
 
 class ImageForm extends Component {
   state = {
@@ -19,8 +22,11 @@ class ImageForm extends Component {
     imagePreview: "",
     toggledTags: [],
     data: {
-      tags: {}
-    }
+      tags: []
+    },
+    showMessageBox: false,
+    error: "",
+    showLoadingSymbol: false
   };
 
   handleChange = async e => {
@@ -49,40 +55,19 @@ class ImageForm extends Component {
       console.log("ERROR", error.response);
       // console.log(error.response.data);
       try {
-        alert(error.response.data);
+        console.log(error.response.data);
+        this.setState({ error: error.response.data, showMessageBox: true });
       } catch (err) {
         console.log("here");
         <Redirect to="/500error" />;
       }
     });
 
-    console.log("RESPONSE", response);
-  };
-
-  fileSelectorHandler = async e => {
-    await this.setState({ selectedFile: e.target.files[0] });
-    const formData = new FormData();
-    formData.append("file", this.state.selectedFile);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-
-    let response = await axios({
-      url: cloudinaryURL,
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      data: formData
-    }).catch(function(err) {
-      console.log("ERR", err);
-    });
-    try {
-      console.log("RESPONSE", response);
-      await this.setState({ imagePreview: response.data.secure_url });
-
-      const data = { ...this.state.data };
-      data["photo"] = response.data.secure_url;
-      this.setState({ data });
-    } catch (error) {
-      console.log(error);
+    if (response) {
+      this.props.history.push("/main");
     }
+
+    console.log("RESPONSE", response);
   };
 
   handleToggledTags = async (e, d) => {
@@ -100,41 +85,78 @@ class ImageForm extends Component {
     console.log("SELECTED", selectedElements);
     const data = { ...this.state.data };
     data["tags"] = selectedElements;
-    await this.setState({ data });
+    await this.setState({ data, toggledTags: selectedElements });
 
     console.log("DATA", this.state.data.tags);
   };
 
-  displaySelected = () => {};
+  fileSelectorHandler = async e => {
+    await this.setState({
+      selectedFile: e.target.files[0],
+      showLoadingSymbol: true
+    });
+    const formData = new FormData();
+    formData.append("file", this.state.selectedFile);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    let response = await axios({
+      url: cloudinaryURL,
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      data: formData
+    }).catch(function(err) {
+      console.log("ERR", err);
+    });
+    this.setState({ showLoadingSymbol: false });
+    try {
+      console.log("RESPONSE", response);
+      await this.setState({
+        imagePreview: response.data.secure_url
+      });
+
+      const data = { ...this.state.data };
+      data["photo"] = response.data.secure_url;
+      this.setState({ data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  closeMessageBox = () => {
+    this.setState({ showMessageBox: false, error: "" });
+  };
 
   render() {
     if (!localStorage.getItem("jwtToken")) {
       console.log(localStorage.getItem("jwtToken"));
       return <Redirect to="/" />;
     }
-    console.log(localStorage.getItem("jwtToken"));
 
     return (
       <div className="newImage">
         <h1>New Image</h1>
         <form onSubmit={this.handleSubmit}>
-          <label id="custom-file-upload">
-            {" "}
-            Upload Image
-            <img src={uploadSymbol} alt="" id="uploadSymbol" />
-            <br />
-            <input
-              type="file"
-              name="imageUpload"
-              onChange={this.fileSelectorHandler}
+          <ImageUpload
+            fileSelectorHandler={this.fileSelectorHandler}
+            imagePreview={this.state.imagePreview}
+          />
+          {this.state.showLoadingSymbol ? (
+            <ReactLoading
+              type="spinningBubbles"
+              color="blue"
+              height={30}
+              width={30}
             />
-            {this.state.imagePreview.length > 0 ? (
-              <img src={this.state.imagePreview} id="imagePreview" />
-            ) : (
-              <div />
-            )}
-          </label>
-
+          ) : null}
+          {this.state.showMessageBox ? (
+            <MessageBox
+              messageBox="imageFormMessageBox"
+              messageClassName="imageFormError"
+              message={this.state.error}
+              closeMessageBox={this.closeMessageBox}
+              buttonClassName="messageBoxButton"
+            />
+          ) : null}
           <Input
             label="Restaurant Name:"
             type="text"
@@ -176,6 +198,7 @@ class ImageForm extends Component {
               menuItems={restrictionTags}
               label="Food Restrictions"
               handleSelect={this.handleToggledTags}
+              selectedElements={this.state.toggledTags}
             />
             <DropdownMenu
               buttonId="dropDown"
@@ -183,12 +206,13 @@ class ImageForm extends Component {
               menuItems={countryTags}
               label="Food Type"
               handleSelect={this.handleToggledTags}
+              selectedElements={this.state.toggledTags}
             />
           </div>
           <div id="added_tags">
-            <div id="selectedHeader">Selected Tags: </div>
+            <div id="selectedHeader">Selected Tags:</div>
             {this.state.toggledTags.map(t => (
-              <li>{t}</li>
+              <li id="imageFormTagList">{t}</li>
             ))}{" "}
           </div>
           <button id="submitButton" type="submit">

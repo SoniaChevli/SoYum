@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import "../styles/soYumHeader.css";
 
 class UserNavBar extends Component {
   state = {};
   handleLogout = () => {
     localStorage.removeItem("jwtToken");
-    alert("You have been logged out!");
+
+    <Redirect to="/main" />;
     window.location.reload(true);
+    this.props.history.push("/main");
+
     console.log(this.props);
   };
   render() {

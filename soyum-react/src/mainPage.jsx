@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import DropdownMenu from "./components/common/dropDownMenu";
+
 import SelectedFilters from "./components/selectedFilter";
 import { restrictionTags, countryTags } from "./data/foodTags";
 import "./styles/dropDown.css";
@@ -16,7 +17,7 @@ class MainPage extends Component {
     filtered: []
   };
 
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(apiEndPoint)
       .then(res => {
@@ -117,6 +118,7 @@ class MainPage extends Component {
                 menuItems={restrictionTags}
                 label="Food Restrictions"
                 handleSelect={this.handleToggledTags}
+                selectedElements={this.state.toggledTags}
               />
               <DropdownMenu
                 buttonId="mainDropDown"
@@ -124,6 +126,7 @@ class MainPage extends Component {
                 menuItems={countryTags}
                 label="Food Type"
                 handleSelect={this.handleToggledTags}
+                selectedElements={this.state.toggledTags}
               />
             </div>
           </label>

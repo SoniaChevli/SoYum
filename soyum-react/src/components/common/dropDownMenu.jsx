@@ -5,17 +5,17 @@ import downArrow from "../../icons/downArrow.png";
 class DropdownMenu extends Component {
   state = {
     showMenu: false,
-    selectedElements: [],
     color: "white"
   };
 
-  showMenu = event => {
+  showMenu = async event => {
     event.preventDefault();
-
-    this.setState({ showMenu: true }, () => {
+    await this.setState({ showMenu: true }, () => {
       this.setState({ buttonColor: "#f97720" });
+      this.setState({ selectedElements: this.props.selectedElements });
       document.addEventListener("click", this.closeMenu);
     });
+    console.log("current dropDown State", this.state);
   };
 
   closeMenu = e => {
@@ -52,10 +52,13 @@ class DropdownMenu extends Component {
           >
             <ul>
               {this.props.menuItems.map(d => (
-                <li key={d}>
+                <li id="dropList" key={d}>
                   <input
                     type="checkbox"
-                    onClick={e => this.props.handleSelect(e, d)}
+                    checked={this.props.selectedElements.includes(d)}
+                    onClick={e => {
+                      this.props.handleSelect(e, d);
+                    }}
                   />
                   <label style={{ marginLeft: "6px" }}> {d}</label>
                 </li>

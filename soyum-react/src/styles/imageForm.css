@@ -37,7 +37,12 @@
   margin-left: 35%;
   margin-top: 20px;
 }
-
+#imageFormTagList {
+  list-style: none;
+  font-family: "IBM Plex Sans", sans-serif;
+  margin: 10px;
+  font-size: 17px;
+}
 #added_tags {
   margin: 20px;
   margin-left: 0px;

@@ -2,17 +2,93 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-
-  border: 1px solid black;
-  width: 700px;
+  width: 800px;
   margin: auto;
   margin-top: 100px;
-  padding: 70px;
+  padding-right: 50px;
+  position: relative;
+  background-color: #fafafa;
+  border: 1px solid #e6e6e6;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 #photoPageImage {
-  width: 300px;
-  height: 300px;
-  margin: 10px;
+  width: 500px;
+  height: 500px;
   object-fit: cover;
+}
+
+.photoInformation {
+  width: 300px;
+  margin-left: 15px;
+
+  position: relative;
+}
+
+#imageHeader {
+  border-bottom: 1px solid #e6e6e6;
+  overflow-x: scroll;
+}
+
+#restaurantNameFull,
+#tagsFull,
+#descriptionFull,
+#tagsFull {
+  display: flex;
+  flex-direction: row;
+  vertical-align: bottom;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 20px;
+  margin-bottom: 70px;
+}
+#cityNameFull {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 20px;
+  margin-top: -35px;
+  margin-left: 5px;
+}
+#restName {
+  font-size: 35px;
+  padding-top: 25px;
+  height: 40px;
+  margin-bottom: -20px;
+  color: #f97720;
+}
+
+#authorFull {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 18px;
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 25px;
+  width: 300px;
+  border-top: 1px solid #e6e6e6;
+  overflow-x: scroll;
+}
+#tagsFull {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  max-height: 145px;
+  overflow-y: scroll;
+}
+#hashTag {
+}
+#hashTag {
+  color: #f97720;
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+#descriptionFull {
+  display: flex;
+  font-size: 16px;
+  height: 145px;
+  overflow-y: scroll;
+}
+#descriptionText {
+  flex-direction: column;
 }

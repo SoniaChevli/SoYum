@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const { photoSchema, Photo, validatePhoto } = require("../models/photo");
 
 const auth = require("../middleware/auth");
@@ -40,22 +41,46 @@ router.get("/:id", async (req, res) => {
   res.send(photo);
 });
 
+router.get("/user/:id", async (req, res) => {
+  console.log(typeof req.params.id);
+  // let id = mongoose.Types.ObjectId("5baa6621f74fbd382e8e4896");
+
+  const photos = await Photo.find({
+    "author._id": req.params.id
+  }).sort({ created_at: -1 });
+  if (!photos)
+    return res.status(404).send("The user with the given id was not found");
+  res.send(photos);
+});
+
 router.post("/", auth, async (req, res) => {
   const { error } = validatePhoto(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-
+  console.log("USER", req);
   let photo = new Photo({
     restaurantName: req.body.restaurantName,
     restaurantLink: req.body.restaurantLink,
     photo: req.body.photo,
-    author: { _id: req.user._id, name: req.user.name },
+    author: { _id: req.user._id, userName: req.user.userName },
     city: req.body.city,
     description: req.body.description,
     tags: req.body.tags
   });
 
   await photo.save();
+
   res.send(photo);
 });
 
+router.delete("/:id", auth, async (req, res) => {
+  let photo = await Photo.findById(req.params.id);
+  if (!photo)
+    return res.status(404).send("The photo with the given id was not found");
+  try {
+    photo = await Photo.remove({ _id: req.params.id });
+    res.send(photo);
+  } catch (err) {
+    console.log("ERROR", err);
+  }
+});
 module.exports = router;

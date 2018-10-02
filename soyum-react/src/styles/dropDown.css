@@ -1,10 +1,15 @@
 #dropDown {
   width: 300px;
+  height: 35px;
   font-size: 14px;
   font-family: "IBM Plex Sans", sans-serif;
   border: 1px solid #e1dfdf;
-  margin-bottom: 20px;
+  margin-bottom: 13px;
   margin-left: 100px;
+}
+
+#mainDropDown {
+  height: 35px;
 }
 
 #dropDown:hover,
@@ -20,12 +25,14 @@
 
 #downArrow {
   height: 24px;
+  padding-left: 10px;
+  margin-bottom: -8px;
 }
 
 .menu {
   background-color: #f9dfce;
   opacity: 0.95;
-  width: 300px;
+  width: 296px;
   position: absolute;
   border-top: 0;
   margin-top: -12px;
@@ -37,7 +44,7 @@
   border: 0;
 }
 
-li {
+#dropList {
   display: flex;
   flex-direction: row;
   list-style: none;
@@ -59,7 +66,7 @@ li {
 .mainMenu {
   background-color: #f9dfce;
   opacity: 0.95;
-  width: 300px;
+  width: 296px;
   position: absolute;
   border-top: 0;
   font-family: "IBM Plex Sans", sans-serif;

@@ -20,7 +20,7 @@ const photoSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
-    name: { type: String }
+    userName: { type: String }
   },
   city: {
     type: String,
@@ -35,7 +35,7 @@ const photoSchema = new mongoose.Schema({
   tags: [],
   created_at: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   }
 });
 
@@ -48,7 +48,7 @@ function validatePhoto(photo) {
     restaurantLink: Joi.string()
       .min(1)
       .max(50),
-    author: Joi.string(),
+    author: Joi.object(),
     city: Joi.string().required(),
     description: Joi.string(),
     tags: Joi.array(),

@@ -24,10 +24,9 @@ class App extends Component {
           <Route path="/newUser" component={NewUser} />
           <Route path="/main" component={MainPage} />
 
-          <Route path="/:id" component={Photo} />
           <Redirect exact from="/photos" to="/main" />
           <Route path="/500error" component={ServerError} />
-
+          <Route path="/:id" component={Photo} />
           <Redirect exact from="/" to="/main" />
         </Switch>
       </div>

@@ -14,6 +14,7 @@
 #searchInput {
   height: 100%;
   font-size: 25px;
+  background-color: #fafafa;
 }
 #imageTags {
   display: flex;
@@ -28,16 +29,22 @@
   position: absolute;
   background: 0;
   border: 1px solid black;
+
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 16px;
 }
 
 #searchButton:hover {
   background: #f97720;
-
+  box-shadow: 0 0 5px #f97720;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
   border: 0;
 
   cursor: pointer;
+}
+#searchButton:focus {
+  outline: none;
 }
 
 img[name="mainPagePhotos"] {
@@ -53,6 +60,7 @@ img[name="mainPagePhotos"]:hover {
   transition-delay: 0s;
   padding-bottom: 4px;
   margin-top: 6px;
+  opacity: 0.8;
 }
 
 .allImages {
@@ -66,4 +74,24 @@ img[name="mainPagePhotos"]:hover {
 #filterChoices {
   display: flex;
   flex-direction: row;
+}
+
+.img__description {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(29, 106, 154, 0.72);
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+
+  /* transition effect. not necessary */
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+img[name="mainPagePhotos"]:hover .img__description {
+  visibility: visible;
+  opacity: 1;
 }
