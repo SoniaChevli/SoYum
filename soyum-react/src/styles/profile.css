@@ -1,0 +1,74 @@
+.profilePage {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 50px;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.imagesDelete {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: inline-block;
+  position: relative;
+}
+
+#deleteButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 30px;
+  width: 30px;
+  padding: 10px;
+  display: none;
+  margin-top: 0px;
+}
+#deleteButton:hover {
+  cursor: pointer;
+  display: block;
+}
+
+img[name="profilePagePhotos"] {
+  width: 300px;
+  height: 300px;
+  margin: 10px;
+  object-fit: cover;
+  flex-direction: row;
+}
+img[name="profilePagePhotos"]:hover + #deleteButton {
+  display: block;
+}
+
+.profilePhoto {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 250px;
+  border: 1px solid #e6e6e6;
+}
+
+.headerUserInfo {
+  width: 350px;
+  margin-left: 70px;
+  margin-top: 20px;
+}
+
+.headerUserName {
+  font-size: 30px;
+}
+
+.headerBio {
+  margin-top: 15px;
+}

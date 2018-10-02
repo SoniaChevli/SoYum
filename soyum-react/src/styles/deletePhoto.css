@@ -1,0 +1,45 @@
+.DeletePopUp {
+  width: 400px;
+  height: 500px;
+
+  background-color: #fafafa;
+  position: fixed;
+  border-radius: 5px;
+  margin-left: 37%;
+  justify-content: center;
+  text-align: center;
+}
+
+.deletePhoto {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.deleteQuestion {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.noButton,
+.yesButton {
+  margin-top: 6px;
+  width: 94px;
+  margin: 15px;
+  height: 40px;
+  background: 0;
+  border: 0;
+  font-family: "IBM Plex Sans", sans-serif;
+  color: #f97720;
+  text-decoration: underline;
+  font-size: 28px;
+  outline: none;
+}
+
+.noButton:hover,
+.yesButton:hover {
+  font-size: 32px;
+  cursor: pointer;
+}
