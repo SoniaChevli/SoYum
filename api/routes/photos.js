@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const _ = require("lodash");
 const { photoSchema, Photo, validatePhoto } = require("../models/photo");
 
 const auth = require("../middleware/auth");
@@ -41,6 +42,49 @@ router.get("/:id", async (req, res) => {
   res.send(photo);
 });
 
+router.put("/favorite/:id", auth, async (req, res) => {
+  Photo.findOne({ _id: req.body.photoId }, function(err, selectedPhoto) {
+    if (err) {
+      return res.send(err);
+    }
+
+    if (selectedPhoto) {
+      let isInArray = selectedPhoto.favorites.some(function(userId, index) {
+        return String(userId) === String(req.body.currentUserId);
+      });
+      console.log("IS IN ARRAY", isInArray);
+      if (isInArray) {
+        selectedPhoto.favorites.some(function(userId, index) {
+          if (String(userId) === String(req.body.currentUserId))
+            selectedPhoto.favorites.splice(index, 1);
+        });
+      } else {
+        selectedPhoto.favorites.push(
+          mongoose.Types.ObjectId(req.body.currentUserId)
+        );
+      }
+      selectedPhoto.save(function(err) {
+        if (err) {
+          return res.send(err);
+        }
+
+        res.send({ message: "done" });
+      });
+    }
+  });
+});
+
+router.get("/favorites/user/:id", auth, async (req, res) => {
+  console.log("current user ", req.params.id);
+  const photos = await Photo.find({
+    favorites: { $in: mongoose.Types.ObjectId(req.params.id) }
+  }).sort({ created_at: -1 });
+  if (!photos)
+    return res.status(404).send("The user with the given id was not found");
+  console.log(photos);
+  res.send(photos);
+});
+
 router.get("/user/:id", async (req, res) => {
   const photos = await Photo.find({
     "author._id": req.params.id
@@ -61,7 +105,8 @@ router.post("/", auth, async (req, res) => {
     author: { _id: req.user._id, userName: req.user.userName },
     city: req.body.city,
     description: req.body.description,
-    tags: req.body.tags
+    tags: req.body.tags,
+    favorites: []
   });
 
   await photo.save();

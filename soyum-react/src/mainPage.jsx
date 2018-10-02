@@ -14,7 +14,8 @@ class MainPage extends Component {
     data: [],
     toggledTags: [],
     citySearch: "",
-    filtered: []
+    filtered: [],
+    favoritesArray: []
   };
 
   componentDidMount() {

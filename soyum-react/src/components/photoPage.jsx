@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import AddFavorite from "./addToFavorite";
 import "../styles/photoPage.css";
 import axios from "axios";
-
+import jwt_decode from "jwt-decode";
+let apiEndPoint = "http://localhost:3000/api/photos/";
 class Photo extends Component {
   state = {
     data: {
@@ -10,15 +12,20 @@ class Photo extends Component {
       author: "None",
       city: "None",
       description: "None",
-      tags: []
+      _id: "None",
+      tags: [],
+      favorites: []
+    },
+    loggedInUser: {
+      id: "None",
+      favoritedPhoto: false
     }
   };
-  componentDidMount() {
-    const apiEndPoint =
-      "http://localhost:3000/api/photos/" + this.props.location.pathname;
+  async componentDidMount() {
+    apiEndPoint += this.props.location.pathname;
     // const apiEndPoint =
     //   "http://localhost:3000/api/photos/5bb118f2762180adf6e9ca60";
-    axios
+    await axios
       .get(apiEndPoint)
       .then(res => {
         console.log("RES", res.data);
@@ -29,6 +36,26 @@ class Photo extends Component {
       .catch(err => {
         console.log("ERR", err);
       });
+    try {
+      let token = localStorage.getItem("jwtToken");
+      const loggedInUserId = jwt_decode(token)["_id"];
+      console.log("loggedInUserId", loggedInUserId);
+      let favoritedPhoto = false;
+      console.log(
+        "if statement to make it true..",
+        this.state.data.favorites.includes(loggedInUserId)
+      );
+      console.log("favorites array", this.state.data.favorites);
+      if (this.state.data.favorites.includes(loggedInUserId))
+        favoritedPhoto = true;
+
+      await this.setState({
+        loggedInUser: { id: loggedInUserId, favoritedPhoto }
+      });
+      console.log("here", this.state.loggedInUser);
+    } catch (err) {
+      console.log("err", err);
+    }
   }
 
   handleTags = () => {
@@ -45,10 +72,26 @@ class Photo extends Component {
     }
   };
 
+  handleFavorite = () => {
+    const loggedInUser = { ...this.state.loggedInUser };
+    loggedInUser["favoritedPhoto"] = !loggedInUser["favoritedPhoto"];
+    this.setState({ loggedInUser });
+  };
+
   render() {
     return (
       <div className="photoPage">
         <img id="photoPageImage" src={this.state.data.photo} alt="" />
+        {this.state.loggedInUser.id !== "None" ? (
+          <AddFavorite
+            starClassName="starPhotoPage"
+            favoritesArray={this.state.data.favorites}
+            currentUserId={this.state.loggedInUser.id}
+            handleFavorite={this.handleFavorite}
+            photoId={this.state.data._id}
+            favoritedPhoto={this.state.loggedInUser.favoritedPhoto}
+          />
+        ) : null}
         <div className="photoInformation">
           <header id="imageHeader">
             <div id="restaurantNameFull">

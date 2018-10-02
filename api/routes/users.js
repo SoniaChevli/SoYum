@@ -7,8 +7,11 @@ const auth = require("../middleware/auth");
 
 router.get("/me", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
-
   res.send(user);
+});
+
+router.put("/me", auth, async (req, res) => {
+  console.log("req ", req.body);
 });
 
 router.get("/", async (req, res) => {
@@ -28,8 +31,7 @@ router.post("/", async (req, res) => {
     email: req.body.email,
     bio: req.body.bio,
     password: req.body.password,
-    profilePhoto: req.body.profilePhoto,
-    favoritePhotos: []
+    profilePhoto: req.body.profilePhoto
   });
 
   const salt = await bcrypt.genSalt(10);

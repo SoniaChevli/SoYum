@@ -36,7 +36,8 @@ const photoSchema = new mongoose.Schema({
   created_at: {
     type: Date,
     default: Date.now
-  }
+  },
+  favorites: []
 });
 
 function validatePhoto(photo) {

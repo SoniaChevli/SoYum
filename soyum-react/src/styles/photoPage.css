@@ -48,9 +48,13 @@
   margin-top: -35px;
   margin-left: 5px;
 }
+
+#restaurantNameFull {
+  padding-top: 20px;
+}
 #restName {
   font-size: 35px;
-  padding-top: 25px;
+
   height: 40px;
   margin-bottom: -20px;
   color: #f97720;
@@ -91,4 +95,14 @@
 }
 #descriptionText {
   flex-direction: column;
+}
+
+.starPhotoPage {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  margin-top: 10px;
+  margin-right: 15px;
+  top: 0;
+  right: 0;
 }
