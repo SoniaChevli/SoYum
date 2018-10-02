@@ -42,9 +42,6 @@ router.get("/:id", async (req, res) => {
 });
 
 router.get("/user/:id", async (req, res) => {
-  console.log(typeof req.params.id);
-  // let id = mongoose.Types.ObjectId("5baa6621f74fbd382e8e4896");
-
   const photos = await Photo.find({
     "author._id": req.params.id
   }).sort({ created_at: -1 });
@@ -56,7 +53,7 @@ router.get("/user/:id", async (req, res) => {
 router.post("/", auth, async (req, res) => {
   const { error } = validatePhoto(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-  console.log("USER", req);
+
   let photo = new Photo({
     restaurantName: req.body.restaurantName,
     restaurantLink: req.body.restaurantLink,

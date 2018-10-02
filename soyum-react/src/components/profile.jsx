@@ -39,7 +39,7 @@ class Profile extends Component {
           console.log("ERR", err.response);
         });
       if (imageResponse) {
-        this.setState({
+        await this.setState({
           data: userResponse.data,
           usersPhotos: imageResponse.data
         });

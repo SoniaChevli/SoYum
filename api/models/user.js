@@ -27,7 +27,8 @@ const userSchema = new mongoose.Schema({
   profilePhoto: {
     type: String
   },
-  bio: String
+  bio: String,
+  favoritePhotos: Array
 });
 
 userSchema.methods.generateAuthToken = function() {
@@ -53,7 +54,8 @@ function validateUser(user) {
       .max(255)
       .required(),
     profilePhoto: Joi.string(),
-    bio: Joi.string()
+    bio: Joi.string(),
+    favoritePhotos: Joi.array()
   };
 
   return Joi.validate(user, schema);
