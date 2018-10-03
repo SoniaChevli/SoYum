@@ -12,8 +12,10 @@ import { restrictionTags, countryTags } from "../data/foodTags";
 
 import axios from "axios";
 
-const apiEndPoint = "http://localhost:3000/api/photos";
+//const apiEndPoint = "http://localhost:3000/api/photos";
+const apiEndPoint = "https://soyumapi.herokuapp.com/api/photos";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dszdk19ok/upload";
+
 let CLOUDINARY_UPLOAD_PRESET = "dtjzjz65";
 
 class ImageForm extends Component {

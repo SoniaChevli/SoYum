@@ -3,7 +3,8 @@ import AddFavorite from "./addToFavorite";
 import "../styles/photoPage.css";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-let apiEndPoint = "http://localhost:3000/api/photos/";
+// let apiEndPoint = "http://localhost:3000/api/photos/";
+let apiEndPoint = "https://soyumapi.herokuapp.com/api/photos/";
 class Photo extends Component {
   state = {
     data: {
@@ -23,8 +24,7 @@ class Photo extends Component {
   };
   async componentDidMount() {
     let photoApiEndPoint = apiEndPoint + this.props.location.pathname;
-    // const apiEndPoint =
-    //   "http://localhost:3000/api/photos/5bb118f2762180adf6e9ca60";
+
     await axios
       .get(photoApiEndPoint)
       .then(res => {

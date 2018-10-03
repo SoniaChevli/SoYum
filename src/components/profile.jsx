@@ -6,8 +6,11 @@ import NoProfilePicture from "../icons/no_profile.png";
 import DeleteButton from "../icons/delete.png";
 
 import DeletePhoto from "./deletePhoto";
-const apiEndPointUser = "http://localhost:3000/api/users/me";
-let apiEndPointUserPhotos = "http://localhost:3000/api/photos/user/";
+//const apiEndPointUser = "http://localhost:3000/api/users/me";
+const apiEndPointUser = "https://soyumapi.herokuapp.com/api/users/me";
+//let apiEndPointUserPhotos = "http://localhost:3000/api/photos/user/";
+let apiEndPointUserPhotos = "https://soyumapi.herokuapp.com/api/photos/user/";
+
 class Profile extends Component {
   state = {
     data: {

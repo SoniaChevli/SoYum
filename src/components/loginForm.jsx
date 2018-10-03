@@ -8,7 +8,8 @@ import "../styles/appScope.css";
 import "../styles/form.css";
 //import "../styles/loginForm.css";
 
-const apiEndPoint = "http://localhost:3000/api/auth";
+//const apiEndPoint = "http://localhost:3000/api/auth";
+const apiEndPoint = "https://soyumapi.herokuapp.com/api/auth";
 
 class LoginForm extends Component {
   state = {

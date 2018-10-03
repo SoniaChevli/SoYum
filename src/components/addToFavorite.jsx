@@ -3,7 +3,7 @@ import axios from "axios";
 import starYellow from "../icons/star_yellow_solid.png";
 import starOutline from "../icons/star_outline.png";
 
-let apiEndPoint = "http://localhost:3000/api/photos/favorite/";
+let apiEndPoint = "https://soyumapi.herokuapp.com/api/photos/favorite/";
 
 class AddFavorite extends Component {
   state = {
