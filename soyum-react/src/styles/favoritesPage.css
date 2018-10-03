@@ -1,0 +1,19 @@
+.favoritesPage {
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.favoritesHeader {
+  border-bottom: 1px solid #e6e6e6;
+  width: 1340px;
+  justify-content: center;
+  align-items: center;
+
+  display: flex;
+  align-items: center;
+}

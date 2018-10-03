@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import "../styles/favoritesPage.css";
 
 let apiEndPoint = "http://localhost:3000/api/photos/favorites/user/";
 class Favorites extends Component {
@@ -16,7 +17,7 @@ class Favorites extends Component {
 
     let token = localStorage.getItem("jwtToken");
     const currentUserId = jwt_decode(token)["_id"];
-    apiEndPoint += currentUserId;
+    let favoritesApiEndPoint = apiEndPoint + currentUserId;
     const config = {
       headers: {
         "x-auth-token": localStorage.getItem("jwtToken")
@@ -24,7 +25,7 @@ class Favorites extends Component {
     };
 
     await axios
-      .get(apiEndPoint, config)
+      .get(favoritesApiEndPoint, config)
       .then(res => {
         console.log("RES", res.data);
         const data = res.data;
@@ -55,8 +56,10 @@ class Favorites extends Component {
   };
   render() {
     return (
-      <div>
-        <h1> Favorites </h1>
+      <div className="favoritesPage">
+        <div className="favoritesHeader">
+          <h1> Favorites</h1>
+        </div>
         <div className="allImages">{this.handleImages()}</div>
       </div>
     );

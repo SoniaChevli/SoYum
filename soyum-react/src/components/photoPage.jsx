@@ -22,11 +22,11 @@ class Photo extends Component {
     }
   };
   async componentDidMount() {
-    apiEndPoint += this.props.location.pathname;
+    let photoApiEndPoint = apiEndPoint + this.props.location.pathname;
     // const apiEndPoint =
     //   "http://localhost:3000/api/photos/5bb118f2762180adf6e9ca60";
     await axios
-      .get(apiEndPoint)
+      .get(photoApiEndPoint)
       .then(res => {
         console.log("RES", res.data);
         const data = res.data;

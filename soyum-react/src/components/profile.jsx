@@ -32,12 +32,11 @@ class Profile extends Component {
       .catch(err => console.log("ERR", err));
 
     if (userResponse) {
-      apiEndPointUserPhotos += userResponse.data._id;
-      const imageResponse = await axios
-        .get(apiEndPointUserPhotos)
-        .catch(err => {
-          console.log("ERR", err.response);
-        });
+      let apiEndPointUserId = apiEndPointUserPhotos + userResponse.data._id;
+      console.log(apiEndPointUserId);
+      const imageResponse = await axios.get(apiEndPointUserId).catch(err => {
+        console.log("ERR", err.response);
+      });
       if (imageResponse) {
         await this.setState({
           data: userResponse.data,
