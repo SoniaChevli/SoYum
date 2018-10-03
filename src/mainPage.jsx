@@ -7,8 +7,8 @@ import { restrictionTags, countryTags } from "./data/foodTags";
 import "./styles/dropDown.css";
 import "./styles/mainPage.css";
 
-const apiEndPoint = "http://localhost:3000/api/photos";
-
+//const apiEndPoint = "http://localhost:3000/api/photos";
+const apiEndPoint = "https://soyumapi.herokuapp.com/api/photos";
 class MainPage extends Component {
   state = {
     data: [],
