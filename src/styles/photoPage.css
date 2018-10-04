@@ -51,12 +51,13 @@
 
 #restaurantNameFull {
   padding-top: 20px;
+  position: relative;
 }
 #restName {
-  font-size: 35px;
-
+  font-size: 30px;
   height: 40px;
   margin-bottom: -20px;
+  overflow-x: scroll;
   color: #f97720;
 }
 
@@ -79,8 +80,7 @@
   max-height: 145px;
   overflow-y: scroll;
 }
-#hashTag {
-}
+
 #hashTag {
   color: #f97720;
   list-style: none;
@@ -90,7 +90,8 @@
 #descriptionFull {
   display: flex;
   font-size: 16px;
-  height: 145px;
+  margin-top: 11px;
+  height: 200px;
   overflow-y: scroll;
 }
 #descriptionText {

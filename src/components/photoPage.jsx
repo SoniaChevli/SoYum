@@ -4,7 +4,7 @@ import "../styles/photoPage.css";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { API_ROOT } from "../api-config";
-// let apiEndPoint = "http://localhost:3000/api/photos/";
+
 let apiEndPoint = API_ROOT + "photos/";
 class Photo extends Component {
   state = {
@@ -93,6 +93,7 @@ class Photo extends Component {
             favoritedPhoto={this.state.loggedInUser.favoritedPhoto}
           />
         ) : null}
+
         <div className="photoInformation">
           <header id="imageHeader">
             <div id="restaurantNameFull">

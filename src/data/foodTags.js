@@ -5,7 +5,7 @@ export const restrictionTags = [
   "keto",
   "dairy free",
   "soy free"
-];
+].sort();
 export const countryTags = [
   "Chinese",
   "Thai",
@@ -21,4 +21,4 @@ export const countryTags = [
   "Spanish",
   "Mexican",
   "American"
-];
+].sort();
