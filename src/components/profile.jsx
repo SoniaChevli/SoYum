@@ -4,12 +4,12 @@ import { Redirect } from "react-router-dom";
 import "../styles/profile.css";
 import NoProfilePicture from "../icons/no_profile.png";
 import DeleteButton from "../icons/delete.png";
-
+import { API_ROOT } from "../api-config";
 import DeletePhoto from "./deletePhoto";
 //const apiEndPointUser = "http://localhost:3000/api/users/me";
-const apiEndPointUser = "https://soyumapi.herokuapp.com/api/users/me";
+const apiEndPointUser = API_ROOT + "users/me";
 //let apiEndPointUserPhotos = "http://localhost:3000/api/photos/user/";
-let apiEndPointUserPhotos = "https://soyumapi.herokuapp.com/api/photos/user/";
+let apiEndPointUserPhotos = API_ROOT + "photos/user/";
 
 class Profile extends Component {
   state = {

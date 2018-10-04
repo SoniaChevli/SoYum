@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import starYellow from "../icons/star_yellow_solid.png";
 import starOutline from "../icons/star_outline.png";
+import { API_ROOT } from "../api-config";
 
-let apiEndPoint = "https://soyumapi.herokuapp.com/api/photos/favorite/";
+let apiEndPoint = API_ROOT + "photos/favorite/";
 
 class AddFavorite extends Component {
   state = {

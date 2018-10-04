@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
 import DropdownMenu from "./components/common/dropDownMenu";
-
 import SelectedFilters from "./components/selectedFilter";
 import { restrictionTags, countryTags } from "./data/foodTags";
+import { API_ROOT } from "./api-config";
 import "./styles/dropDown.css";
 import "./styles/mainPage.css";
 
-//const apiEndPoint = "http://localhost:3000/api/photos";
-const apiEndPoint = "https://soyumapi.herokuapp.com/api/photos";
+console.log("API ROOT TEST", API_ROOT);
+const apiEndPoint = API_ROOT + "photos";
+
+//const apiEndPoint = "https://soyumapi.herokuapp.com/api/photos";
 class MainPage extends Component {
   state = {
     data: [],

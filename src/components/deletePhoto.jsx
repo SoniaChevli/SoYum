@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../styles/deletePhoto.css";
+import { API_ROOT } from "../api-config";
 
-let apiEndPoint = "https://soyumapi.herokuapp.com/api/photos/";
+let apiEndPoint = API_ROOT + "photos/";
 //https://soyum.herokuapp.com/api/photos/
 class DeletePhoto extends Component {
   state = {};

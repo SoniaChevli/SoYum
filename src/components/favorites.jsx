@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import "../styles/favoritesPage.css";
+import { API_ROOT } from "../api-config";
 
-//let apiEndPoint = "http://localhost:3000/api/photos/favorites/user/";
-let apiEndPoint = "https://soyumapi.herokuapp.com/api/photos/favorites/user/";
+let apiEndPoint = API_ROOT + "photos/favorites/user/";
 class Favorites extends Component {
   state = {
     data: [],

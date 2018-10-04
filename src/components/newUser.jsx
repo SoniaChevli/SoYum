@@ -3,9 +3,10 @@ import Input from "./common/input";
 import ImageUpload from "./common/imageUpload";
 import axios from "axios";
 import "../styles/form.css";
-
+import { API_ROOT } from "../api-config";
 //const apiEndPointNewUser = "http://localhost:3000/api/users";
-const apiEndPointNewUser = "https://soyumapi.herokuapp.com/api/users";
+
+const apiEndPointNewUser = API_ROOT + "users";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dszdk19ok/upload";
 let CLOUDINARY_UPLOAD_PRESET = "dtjzjz65";
 

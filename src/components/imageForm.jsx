@@ -5,6 +5,7 @@ import DropdownMenu from "./common/dropDownMenu";
 import ImageUpload from "./common/imageUpload";
 import MessageBox from "./common/messageBox";
 import ReactLoading from "react-loading";
+import { API_ROOT } from "../api-config";
 import "../styles/imageForm.css";
 import "../styles/appScope.css";
 import "../styles/form.css";
@@ -12,8 +13,7 @@ import { restrictionTags, countryTags } from "../data/foodTags";
 
 import axios from "axios";
 
-//const apiEndPoint = "http://localhost:3000/api/photos";
-const apiEndPoint = "https://soyumapi.herokuapp.com/api/photos";
+const apiEndPoint = API_ROOT + "photos";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dszdk19ok/upload";
 
 let CLOUDINARY_UPLOAD_PRESET = "dtjzjz65";

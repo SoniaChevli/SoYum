@@ -3,13 +3,13 @@ import { Redirect } from "react-router-dom";
 import Input from "./common/input";
 import MessageBox from "./common/messageBox";
 import axios from "axios";
-
+import { API_ROOT } from "../api-config";
 import "../styles/appScope.css";
 import "../styles/form.css";
 //import "../styles/loginForm.css";
 
 //const apiEndPoint = "http://localhost:3000/api/auth";
-const apiEndPoint = "https://soyumapi.herokuapp.com/api/auth";
+const apiEndPoint = API_ROOT + "auth";
 
 class LoginForm extends Component {
   state = {
