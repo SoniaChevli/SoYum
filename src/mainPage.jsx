@@ -10,7 +10,6 @@ import "./styles/mainPage.css";
 console.log("API ROOT TEST", API_ROOT);
 const apiEndPoint = API_ROOT + "photos";
 
-//const apiEndPoint = "https://soyumapi.herokuapp.com/api/photos";
 class MainPage extends Component {
   state = {
     data: [],
@@ -24,10 +23,8 @@ class MainPage extends Component {
     axios
       .get(apiEndPoint)
       .then(res => {
-        console.log("RES", res.data);
         const data = res.data;
         this.setState({ data });
-        console.log("DATA", this.state.data);
       })
       .catch(err => {
         console.log("ERR", err);
@@ -56,7 +53,6 @@ class MainPage extends Component {
   };
 
   handleToggledTags = async (e, d) => {
-    console.log("D", d);
     const selectedElements = [...this.state.toggledTags];
     if (!selectedElements.includes(d)) {
       selectedElements.push(d);
@@ -65,16 +61,11 @@ class MainPage extends Component {
       console.log(index);
       selectedElements.splice(index, 1);
     }
-    console.log("SELECTED", selectedElements);
-
     await this.setState({ toggledTags: selectedElements });
-
-    console.log("DATA", this.state.toggledTags);
   };
 
   handleSubmit = async e => {
     e.preventDefault();
-    console.log("here", this.state.toggledTags);
     let allData = [...this.state.data];
 
     const response = await axios
@@ -95,11 +86,9 @@ class MainPage extends Component {
 
   handleChange = async e => {
     await this.setState({ citySearch: e.target.value });
-    console.log(this.state.citySearch);
   };
-  render() {
-    console.log("DATA", this.state.citySearch);
 
+  render() {
     return (
       <div className="mainPage">
         {" "}

@@ -7,8 +7,6 @@ import { API_ROOT } from "../api-config";
 //const apiEndPointNewUser = "http://localhost:3000/api/users";
 
 const apiEndPointNewUser = API_ROOT + "users";
-const cloudinaryURL = "https://api.cloudinary.com/v1_1/dszdk19ok/upload";
-let CLOUDINARY_UPLOAD_PRESET = "dtjzjz65";
 
 class NewUser extends Component {
   state = {
@@ -38,25 +36,14 @@ class NewUser extends Component {
   };
 
   fileSelectorHandler = async e => {
-    console.log("e", e.target.files[0]);
-    const formData = new FormData();
-    formData.append("file", e.target.files[0]);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-
-    let response = await axios({
-      url: cloudinaryURL,
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      data: formData
-    }).catch(function(err) {
-      console.log("ERR", err);
-    });
-    try {
-      console.log("RESPONSE", response);
-      await this.setState({ profilePhoto: response.data.secure_url });
-    } catch (error) {
-      console.log(error);
-    }
+    let file = e.target.files[0];
+    if (file.size >= 14000000)
+      return this.setState({ error: "image must be under 14mb" });
+    var reader = new FileReader();
+    reader.onload = upload => {
+      this.setState({ profilePhoto: upload.target.result });
+    };
+    reader.readAsDataURL(file);
   };
 
   render() {

@@ -10,13 +10,9 @@ import "../styles/imageForm.css";
 import "../styles/appScope.css";
 import "../styles/form.css";
 import { restrictionTags, countryTags } from "../data/foodTags";
-
 import axios from "axios";
 
 const apiEndPoint = API_ROOT + "photos";
-const cloudinaryURL = "https://api.cloudinary.com/v1_1/dszdk19ok/upload";
-
-let CLOUDINARY_UPLOAD_PRESET = "dtjzjz65";
 
 class ImageForm extends Component {
   state = {
@@ -24,7 +20,8 @@ class ImageForm extends Component {
     imagePreview: "",
     toggledTags: [],
     data: {
-      tags: []
+      tags: [],
+      photo: null
     },
     showMessageBox: false,
     error: "",
@@ -43,16 +40,17 @@ class ImageForm extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
     const obj = this.state.data;
+    console.log("OBJ", obj);
     const jwtToken = localStorage.getItem("jwtToken");
-    console.log("JWTTOKEN", jwtToken);
+
     const config = {
       headers: {
         "x-auth-token": localStorage.getItem("jwtToken")
       }
     };
-    console.log("CONFIG", config);
-    console.log("SUBMITTED", this.state);
+
     const response = await axios.post(apiEndPoint, obj, config).catch(error => {
       console.log("ERROR", error.response);
       // console.log(error.response.data);
@@ -93,35 +91,19 @@ class ImageForm extends Component {
   };
 
   fileSelectorHandler = async e => {
-    await this.setState({
-      selectedFile: e.target.files[0],
-      showLoadingSymbol: true
-    });
-    const formData = new FormData();
-    formData.append("file", this.state.selectedFile);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    console.log("SELECTER TEST", e.target.files[0]);
+    let file = e.target.files[0];
+    if (file.size >= 14000000)
+      return this.setState({ error: "image must be under 14mb" });
 
-    let response = await axios({
-      url: cloudinaryURL,
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      data: formData
-    }).catch(function(err) {
-      console.log("ERR", err);
-    });
-    this.setState({ showLoadingSymbol: false });
-    try {
-      console.log("RESPONSE", response);
-      await this.setState({
-        imagePreview: response.data.secure_url
-      });
-
-      const data = { ...this.state.data };
-      data["photo"] = response.data.secure_url;
+    var reader = new FileReader();
+    reader.onload = upload => {
+      console.log("READER ONLOAD", e.target);
+      let data = { ...this.state.data };
+      data["photo"] = upload.target.result;
       this.setState({ data });
-    } catch (error) {
-      console.log(error);
-    }
+    };
+    reader.readAsDataURL(file);
   };
 
   closeMessageBox = () => {
@@ -140,7 +122,7 @@ class ImageForm extends Component {
         <form onSubmit={this.handleSubmit}>
           <ImageUpload
             fileSelectorHandler={this.fileSelectorHandler}
-            imagePreview={this.state.imagePreview}
+            imagePreview={this.state.data.photo}
           />
           {this.state.showLoadingSymbol ? (
             <ReactLoading
