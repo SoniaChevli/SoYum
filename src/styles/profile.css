@@ -1,7 +1,6 @@
 .profilePage {
   display: flex;
   flex-direction: column;
-
   margin-top: 50px;
 }
 
@@ -15,15 +14,21 @@
 }
 
 .imagesDelete {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   align-items: center;
   margin: 0 auto;
+  width: fit-content;
   margin-top: 20px;
   display: inline-block;
-  position: relative;
+  position: relative; */
 }
-
+.imagesDelete {
+  margin: 10px;
+  width: 20vw;
+  /* height: 20%; */
+  height: 20vw;
+}
 #deleteButton {
   position: absolute;
   top: 10px;
@@ -40,16 +45,27 @@
 }
 
 img[name="profilePagePhotos"] {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   margin: 10px;
   object-fit: cover;
-  flex-direction: row;
 }
 img[name="profilePagePhotos"]:hover + #deleteButton {
+  cursor: pointer;
   display: block;
+  z-index: 1;
 }
+.ProfileallImages {
+  display: flex;
 
+  /* width: 100vw; */
+  width: fit-content;
+
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 20px; */
+  flex-flow: wrap;
+}
 .profilePhoto {
   width: 200px;
   height: 200px;
@@ -71,4 +87,22 @@ img[name="profilePagePhotos"]:hover + #deleteButton {
 
 .headerBio {
   margin-top: 15px;
+}
+@media screen and (max-width: 1024px) {
+  .imagesDelete {
+    width: 40vw;
+    height: 40vw;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  /* .allImages {
+    display: flex;
+    flex-direction: row;
+
+  } */
+  .imagesDelete {
+    width: 180vw;
+    height: 180vw;
+  }
 }

@@ -93,10 +93,9 @@ class Profile extends Component {
 
   render() {
     if (!localStorage.getItem("jwtToken")) {
-      console.log(localStorage.getItem("jwtToken"));
       return <Redirect to="/" />;
     }
-    console.log("START OF RENDER", this.state);
+
     return (
       <div className="profilePage">
         <header className="profileHeader">
@@ -114,7 +113,7 @@ class Profile extends Component {
             <div className="headerBio">{this.state.data.bio} </div>
           </div>
         </header>
-        <div className="allImages">{this.handleImages()}</div>
+        <div className="ProfileallImages">{this.handleImages()}</div>
 
         {this.state.displayDeletePopUp.display ? (
           <DeletePhoto
