@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import Input from "./common/input";
 import ImageUpload from "./common/imageUpload";
+import MessageBox from "./common/messageBox";
+import TextArea from "./common/textArea";
 import axios from "axios";
-import "../styles/form.css";
 import { API_ROOT } from "../api-config";
-//const apiEndPointNewUser = "http://localhost:3000/api/users";
+import "../styles/form.css";
+import "../styles/newUser.css";
 
 const apiEndPointNewUser = API_ROOT + "users";
 
@@ -13,17 +15,23 @@ class NewUser extends Component {
     userName: "",
     email: "",
     password: "",
-    profilePhoto: undefined
+    profilePhoto: undefined,
+    errorMessageBox: {
+      displayCreateAccountError: false,
+      errorCreateAccount:
+        "There was an error creating an account. Please try again later...",
+      displayImageSizeError: false,
+      errorImageSize: "Image must be under 14mb"
+    }
   };
 
   handleSubmit = async e => {
     e.preventDefault();
-
-    console.log("SUBMITTED", this.state);
     const obj = this.state;
-    const response = await axios.post(apiEndPointNewUser, obj).catch(error => {
-      console.log("ERROR", error.response);
-      alert(error.response.data);
+    const response = await axios.post(apiEndPointNewUser, obj).catch(() => {
+      let errorMessageBox = { ...this.state.errorMessageBox };
+      errorMessageBox["displayCreateAccountError"] = true;
+      this.setState({ errorMessageBox });
     });
     if (response) {
       this.props.history.push("/login");
@@ -37,13 +45,24 @@ class NewUser extends Component {
 
   fileSelectorHandler = async e => {
     let file = e.target.files[0];
-    if (file.size >= 14000000)
-      return this.setState({ error: "image must be under 14mb" });
+    if (file.size >= 14000000) {
+      let errorMessageBox = { ...this.state.errorMessageBox };
+      errorMessageBox["displayImageSizeError"] = true;
+      return this.setState({ errorMessageBox });
+    }
+
     var reader = new FileReader();
     reader.onload = upload => {
       this.setState({ profilePhoto: upload.target.result });
     };
     reader.readAsDataURL(file);
+  };
+
+  closeMessageBox = () => {
+    const errorMessageBox = { ...this.state.errorMessageBox };
+    errorMessageBox["displayCreateAccountError"] = false;
+    errorMessageBox["displayImageSizeError"] = false;
+    this.setState({ errorMessageBox });
   };
 
   render() {
@@ -73,22 +92,35 @@ class NewUser extends Component {
             name="password"
             handleChange={this.handleChange}
           />
-          <label className="userBio">
-            {" "}
-            Bio:
-            <br />
-            <textarea
-              id="userBio"
-              name="bio"
-              onChange={this.handleChange}
-              placeholder="Not Required"
-            />
-          </label>
-
+          <TextArea
+            textAreaClassName="userBio"
+            _id="userBio"
+            name="bio"
+            handleChange={this.handleChange}
+            placeholder="Not Required"
+          />
           <button id="submitButton" type="submit">
             Create
           </button>
         </form>
+        {this.state.errorMessageBox.displayCreateAccountError ? (
+          <MessageBox
+            messageBox="loginMessageBox"
+            messageClassName="loginError"
+            message={this.state.errorMessageBox.errorCreateAccount}
+            closeMessageBox={this.closeMessageBox}
+            buttonClassName="messageBoxButton"
+          />
+        ) : null}
+        {this.state.errorMessageBox.displayImageSizeError ? (
+          <MessageBox
+            messageBox="loginMessageBox"
+            messageClassName="loginError"
+            message={this.state.errorMessageBox.errorImageSize}
+            closeMessageBox={this.closeMessageBox}
+            buttonClassName="messageBoxButton"
+          />
+        ) : null}
       </div>
     );
   }

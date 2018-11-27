@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 import "../styles/deletePhoto.css";
 import { API_ROOT } from "../api-config";
+import MessageBox from "./common/messageBox";
 
 let apiEndPoint = API_ROOT + "photos/";
-//https://soyum.herokuapp.com/api/photos/
 class DeletePhoto extends Component {
-  state = {};
+  state = {
+    showMessageBox: false,
+    error: ""
+  };
 
   handleDelete = async () => {
     const config = {
@@ -14,23 +17,16 @@ class DeletePhoto extends Component {
         "x-auth-token": localStorage.getItem("jwtToken")
       }
     };
-    console.log("make delete happen");
-    apiEndPoint += this.props.photoId;
-    console.log("apiEndPoint", apiEndPoint);
-    let response = await axios
-      .delete(apiEndPoint, config)
-      .catch(err => console.log("ERROR", err));
-    if (response) {
-      console.log("Photo Deletion Successful ");
-    } else {
-      console.log("Photo Failed to delete");
-    }
+    let finalEndPoint = apiEndPoint + this.props.photoId;
+    await axios
+      .delete(finalEndPoint + "hi", config)
+      .catch(err => this.setState({ showMessageBox: true, error: { err } }));
     this.props.closeDeletePopUp();
-    window.location.reload(true);
   };
 
-  handleExitPopUp = () => {
-    this.console.log("go back to profile page");
+  closeMessageBox = () => {
+    this.setState({ showMessageBox: false, error: "" });
+    this.props.closeDeletePopUp();
   };
 
   render() {
@@ -50,6 +46,15 @@ class DeletePhoto extends Component {
             {" "}
             No{" "}
           </button>{" "}
+          {this.state.showMessageBox ? (
+            <MessageBox
+              messageBox="loginMessageBox"
+              messageClassName="loginError"
+              message={this.state.error}
+              closeMessageBox={this.closeMessageBox}
+              buttonClassName="messageBoxButton"
+            />
+          ) : null}
         </div>
       </div>
     );

@@ -1,4 +1,4 @@
-.userBio {
+/* .userBio {
   width: 100%;
   height: 100px;
   margin: 8px 0;
@@ -7,4 +7,19 @@
   font-weight: 900;
   font-size: 14px;
   border: 1px solid #e1dfdf;
+} */
+
+input[type="password"]:focus,
+input[type="email"]:focus {
+  box-shadow: 0 0 5px #f97720;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 0;
+}
+
+input[name="userName"] {
+  width: 500px;
+  height: 26px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 14px;
 }

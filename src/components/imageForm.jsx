@@ -35,7 +35,6 @@ class ImageForm extends Component {
     data[attr] = e.target.value;
 
     await this.setState({ data });
-    console.log("DATA", this.state.data);
   };
 
   handleSubmit = async e => {
@@ -43,7 +42,6 @@ class ImageForm extends Component {
 
     const obj = this.state.data;
     console.log("OBJ", obj);
-    const jwtToken = localStorage.getItem("jwtToken");
 
     const config = {
       headers: {
@@ -52,28 +50,20 @@ class ImageForm extends Component {
     };
 
     const response = await axios.post(apiEndPoint, obj, config).catch(error => {
-      console.log("ERROR", error.response);
-      // console.log(error.response.data);
       try {
         console.log(error.response.data);
         this.setState({ error: error.response.data, showMessageBox: true });
       } catch (err) {
         console.log("here");
-        <Redirect to="/500error" />;
       }
     });
 
     if (response) {
       this.props.history.push("/main");
     }
-
-    console.log("RESPONSE", response);
   };
 
   handleToggledTags = async (e, d) => {
-    console.log("Handle Toggled Tags", e);
-
-    console.log("D", d);
     const selectedElements = [...this.state.data.tags];
     if (!selectedElements.includes(d)) {
       selectedElements.push(d);
@@ -82,23 +72,17 @@ class ImageForm extends Component {
       console.log(index);
       selectedElements.splice(index, 1);
     }
-    console.log("SELECTED", selectedElements);
     const data = { ...this.state.data };
     data["tags"] = selectedElements;
     await this.setState({ data, toggledTags: selectedElements });
-
-    console.log("DATA", this.state.data.tags);
   };
 
   fileSelectorHandler = async e => {
-    console.log("SELECTER TEST", e.target.files[0]);
     let file = e.target.files[0];
     if (file.size >= 14000000)
       return this.setState({ error: "image must be under 14mb" });
-
     var reader = new FileReader();
     reader.onload = upload => {
-      console.log("READER ONLOAD", e.target);
       let data = { ...this.state.data };
       data["photo"] = upload.target.result;
       this.setState({ data });
@@ -112,7 +96,6 @@ class ImageForm extends Component {
 
   render() {
     if (!localStorage.getItem("jwtToken")) {
-      console.log(localStorage.getItem("jwtToken"));
       return <Redirect to="/" />;
     }
 

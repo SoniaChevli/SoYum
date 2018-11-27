@@ -72,3 +72,47 @@ img[name="profilePagePhotos"]:hover + #deleteButton {
 .headerBio {
   margin-top: 15px;
 }
+
+.profileError {
+  width: 300px;
+  height: 100px;
+  border: 1px solid black;
+  background: white;
+  position: fixed;
+  margin-left: 40%;
+  border-radius: 10px;
+}
+
+.profileErrorMessage {
+  margin-top: 15px;
+  text-align: center;
+  max-height: 80px;
+  padding-right: 15px;
+  overflow: scroll;
+}
+
+.closeProfileError {
+  border: 0;
+  font-family: "IBM Plex Sans", sans-serif;
+  text-decoration: underline;
+  color: blue;
+  font-size: 18px;
+  outline: none;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  right: 0;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.closeProfileError:hover {
+  cursor: pointer;
+}
+
+.warningIcon {
+  float: left;
+  padding-left: 5px;
+  margin-top: 5px;
+  height: 30px;
+  width: 30px;
+}

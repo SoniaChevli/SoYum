@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import "../styles/profile.css";
-import NoProfilePicture from "../icons/no_profile.png";
-import DeleteButton from "../icons/delete.png";
 import { API_ROOT } from "../api-config";
 import DeletePhoto from "./deletePhoto";
-//const apiEndPointUser = "http://localhost:3000/api/users/me";
+import NoProfilePicture from "../icons/no_profile.png";
+import DeleteButton from "../icons/delete.png";
+import MessageBox from "./common/messageBox";
+import "../styles/profile.css";
+
 const apiEndPointUser = API_ROOT + "users/me";
-//let apiEndPointUserPhotos = "http://localhost:3000/api/photos/user/";
 let apiEndPointUserPhotos = API_ROOT + "photos/user/";
 
 class Profile extends Component {
@@ -21,36 +21,54 @@ class Profile extends Component {
       bio: ""
     },
     usersPhotos: [],
-    displayDeletePopUp: { display: false, photoId: "", photoUrl: "" }
+    displayDeletePopUp: { display: false, photoId: "", photoUrl: "" },
+    displayErrorMessage: { display: false, error: "" }
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    if (!localStorage.getItem("jwtToken")) {
+      return this.props.history.push("/main");
+    }
+  }
+  handleErrorMessageClose = async () => {
+    let displayErrorMessage = { ...this.state.displayErrorMessage };
+    displayErrorMessage["display"] = false;
+    displayErrorMessage["error"] = "";
+    await this.setState({ displayErrorMessage });
+    return this.props.history.push("/");
+  };
+
+  retrievePhotos = async () => {
     const config = {
       headers: {
         "x-auth-token": localStorage.getItem("jwtToken")
       }
     };
-    const userResponse = await axios
-      .get(apiEndPointUser, config)
-      .catch(err => console.log("ERR", err));
+    const userResponse = await axios.get(apiEndPointUser, config).catch(err => {
+      const displayErrorMessage = { ...this.state.displayErrorMessage };
+      displayErrorMessage["display"] = true;
+      displayErrorMessage["error"] =
+        "There was an error loading your images. Try again later!";
+      this.setState({ displayErrorMessage });
+    });
 
     if (userResponse) {
       let apiEndPointUserId = apiEndPointUserPhotos + userResponse.data._id;
-      console.log(apiEndPointUserId);
       const imageResponse = await axios.get(apiEndPointUserId).catch(err => {
-        console.log("ERR", err.response);
+        const displayErrorMessage = { ...this.state.displayErrorMessage };
+        displayErrorMessage["display"] = true;
+        displayErrorMessage["error"] =
+          "There was an error loading your images. Try again later!";
+        this.setState({ displayErrorMessage });
       });
       if (imageResponse) {
-        await this.setState({
+        this.setState({
           data: userResponse.data,
           usersPhotos: imageResponse.data
         });
       }
     }
-    console.log("PROFILE STATE ON MOUNT", this.state.data);
-    console.log("PHOTO RESPONSE", this.state.usersPhotos);
-  }
-
+  };
   handleDeleteClick = async photo => {
     console.log("DELETE", photo.photo);
     const displayDeletePopUp = { ...this.state.displayDeletePopUp };
@@ -58,22 +76,21 @@ class Profile extends Component {
     displayDeletePopUp["photoId"] = photo._id;
     displayDeletePopUp["photoUrl"] = photo.photo;
     await this.setState({ displayDeletePopUp });
-    console.log("state after delete", this.state.displayDeletePopUp);
+    console.log("display delete popUP", this.state.displayDeletePopUp);
   };
-
   closeDeletePopUp = async () => {
     const displayDeletePopUp = { ...this.state.displayDeletePopUp };
     displayDeletePopUp["display"] = false;
     displayDeletePopUp["photoId"] = "";
     displayDeletePopUp["photoUrl"] = "";
-    await this.setState({ displayDeletePopUp });
+    this.setState({ displayDeletePopUp });
+    console.log("display delete popUP", this.state.displayDeletePopUp);
   };
   handleImages = () => {
+    this.retrievePhotos();
     let photos = this.state.usersPhotos;
-
-    console.log("here", photos);
     return photos.map(d => (
-      <div className="imagesDelete">
+      <div className="imagesDelete" key={d._id}>
         <img
           name="profilePagePhotos"
           src={d.photo}
@@ -90,13 +107,11 @@ class Profile extends Component {
       </div>
     ));
   };
-
   render() {
     if (!localStorage.getItem("jwtToken")) {
       console.log(localStorage.getItem("jwtToken"));
       return <Redirect to="/" />;
     }
-    console.log("START OF RENDER", this.state);
     return (
       <div className="profilePage">
         <header className="profileHeader">
@@ -121,6 +136,15 @@ class Profile extends Component {
             photoId={this.state.displayDeletePopUp.photoId}
             photoUrl={this.state.displayDeletePopUp.photoUrl}
             closeDeletePopUp={this.closeDeletePopUp}
+          />
+        ) : null}
+        {this.state.displayErrorMessage.display ? (
+          <MessageBox
+            messageBox="profileError"
+            messageClassName="profileErrorMessage"
+            closeMessageBox={this.handleErrorMessageClose}
+            buttonClassName="closeProfileError"
+            message={this.state.displayErrorMessage.error}
           />
         ) : null}
       </div>
