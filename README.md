@@ -3,3 +3,18 @@ Full stack web application that is a platform for users to upload and share pict
 
 ![Alt text](./SoYum_Screenshot_10-6.png)
 
+## Getting Started
+### Installing Dependencies
+From within the root directory:
+
+```
+npm install
+nodemon
+```
+In new terminal tab:
+```
+mongod
+```
+--
+## Author
+Sonia Chevli -- soniachevli@gmail.com
