@@ -2,8 +2,20 @@ body {
   margin-bottom: 100px;
 }
 
+input[name="password"],
+input[name="email"],
+input[type="text"] {
+  width: 500px;
+  font-size: 14px;
+  font-family: "IBM Plex Sans", sans-serif;
+  border: 1px solid #e1dfdf;
+  margin-bottom: 20px;
+}
+
 input[type="text"]:focus,
-textarea:focus {
+textarea:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
   box-shadow: 0 0 5px #f97720;
   padding: 3px 0px 3px 3px;
   margin: 5px 1px 3px 0px;
@@ -40,5 +52,7 @@ input[type="email"] {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   outline: none;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
   border: 1px solid #dddddd;
 }

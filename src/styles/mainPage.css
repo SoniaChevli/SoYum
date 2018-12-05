@@ -1,0 +1,120 @@
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+#searchBar {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+}
+#searchInput {
+  height: 100%;
+  font-size: 25px;
+  background-color: #fafafa;
+}
+#imageTags {
+  display: flex;
+  flex-direction: row;
+  margin-left: -100px;
+}
+
+#searchButton {
+  margin-top: 6px;
+  width: 94px;
+  height: 40px;
+  position: absolute;
+  background: 0;
+  border: 1px solid black;
+
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 16px;
+}
+
+#searchButton:hover {
+  background: #f97720;
+  box-shadow: 0 0 5px #f97720;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 0;
+
+  cursor: pointer;
+}
+#searchButton:focus {
+  outline: none;
+}
+
+img[name="mainPagePhotos"] {
+  width: 20vw;
+  /* height: 20%; */
+  height: 20vw;
+  margin: 10px;
+  object-fit: cover;
+}
+img[name="mainPagePhotos"]:hover {
+  cursor: pointer;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  padding-bottom: 4px;
+  margin-top: 6px;
+  opacity: 0.8;
+}
+
+.allImages {
+  display: flex;
+
+  /* width: 100vw; */
+  width: fit-content;
+  /* height: 100vw; */
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  flex-flow: wrap;
+  /* display: inline-block; */
+}
+
+#filterChoices {
+  display: flex;
+  flex-direction: row;
+}
+
+.img__description {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(29, 106, 154, 0.72);
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+
+  /* transition effect. not necessary */
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+img[name="mainPagePhotos"]:hover .img__description {
+  visibility: visible;
+  opacity: 1;
+}
+@media screen and (max-width: 1024px) {
+  img[name="mainPagePhotos"] {
+    width: 40vw;
+    height: 40vw;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  /* .allImages {
+    display: flex;
+    flex-direction: row;
+  } */
+  img[name="mainPagePhotos"] {
+    width: 80vw;
+    height: 80vw;
+  }
+}
