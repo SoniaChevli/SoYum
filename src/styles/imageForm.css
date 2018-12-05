@@ -53,3 +53,12 @@
   font-weight: bold;
   font-size: 18px;
 }
+input[name="restaurantName"],
+input[name="restaurantLink"],
+input[name="city"] {
+  width: 500px;
+  font-size: 14px;
+  font-family: "IBM Plex Sans", sans-serif;
+  border: 1px solid #e1dfdf;
+  margin-bottom: 20px;
+}

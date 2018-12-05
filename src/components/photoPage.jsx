@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { API_ROOT } from "../api-config";
+import axios from "axios";
 import AddFavorite from "./addToFavorite";
 import "../styles/photoPage.css";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import { API_ROOT } from "../api-config";
 
-let apiEndPoint = API_ROOT + "photos/";
+let photoApiEndPoint = API_ROOT + "photos/";
+const userApiEndPoint = API_ROOT + "users/me";
 class Photo extends Component {
   state = {
     data: {
@@ -21,42 +22,46 @@ class Photo extends Component {
     loggedInUser: {
       id: "None",
       favoritedPhoto: false
+    },
+    errorMessageBox: {
+      displayUserIdError: false,
+      errorMessageUserId:
+        "There was an error properly loading this page. Please try again later..."
     }
   };
   async componentDidMount() {
-    let photoApiEndPoint = apiEndPoint + this.props.location.pathname;
+    let photoIdApiEndPoint = photoApiEndPoint + this.props.location.pathname;
 
-    await axios
-      .get(photoApiEndPoint)
+    axios
+      .get(photoIdApiEndPoint)
       .then(res => {
-        console.log("RES", res.data);
         const data = res.data;
         this.setState({ data });
-        console.log("DATA", this.state.data);
       })
       .catch(err => {
         console.log("ERR", err);
       });
-    try {
-      let token = localStorage.getItem("jwtToken");
-      const loggedInUserId = jwt_decode(token)["_id"];
-      console.log("loggedInUserId", loggedInUserId);
-      let favoritedPhoto = false;
-      console.log(
-        "if statement to make it true..",
-        this.state.data.favorites.includes(loggedInUserId)
-      );
-      console.log("favorites array", this.state.data.favorites);
-      if (this.state.data.favorites.includes(loggedInUserId))
-        favoritedPhoto = true;
 
-      await this.setState({
-        loggedInUser: { id: loggedInUserId, favoritedPhoto }
+    const config = {
+      headers: {
+        "x-auth-token": localStorage.getItem("jwtToken")
+      }
+    };
+
+    axios
+      .get(userApiEndPoint, config)
+      .then(async res => {
+        let loggedInUserId = res.data._id;
+        let favoritedPhoto = false;
+        if (this.state.data.favorites.includes(loggedInUserId))
+          favoritedPhoto = true;
+        this.setState({
+          loggedInUser: { id: loggedInUserId, favoritedPhoto }
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-      console.log("here", this.state.loggedInUser);
-    } catch (err) {
-      console.log("err", err);
-    }
   }
 
   handleTags = () => {
@@ -68,7 +73,6 @@ class Photo extends Component {
           #{t.replace(/\s/g, "")}
         </div>
       ));
-
       return final;
     }
   };
@@ -77,6 +81,13 @@ class Photo extends Component {
     const loggedInUser = { ...this.state.loggedInUser };
     loggedInUser["favoritedPhoto"] = !loggedInUser["favoritedPhoto"];
     this.setState({ loggedInUser });
+  };
+
+  closeMessageBox = async () => {
+    console.log("here");
+    let errorMessageBox = { ...this.state.errorMessageBox };
+    errorMessageBox["displayUserIdError"] = false;
+    <Redirect to="" />;
   };
 
   render() {
@@ -93,7 +104,6 @@ class Photo extends Component {
             favoritedPhoto={this.state.loggedInUser.favoritedPhoto}
           />
         ) : null}
-
         <div className="photoInformation">
           <header id="imageHeader">
             <div id="restaurantNameFull">

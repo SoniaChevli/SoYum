@@ -13,9 +13,8 @@ class Favorites extends Component {
 
   async componentDidMount() {
     if (!localStorage.getItem("jwtToken")) {
-      this.props.history.push("/main");
+      return this.props.history.push("/main");
     }
-
     let token = localStorage.getItem("jwtToken");
     const currentUserId = jwt_decode(token)["_id"];
     let favoritesApiEndPoint = apiEndPoint + currentUserId;
@@ -25,14 +24,12 @@ class Favorites extends Component {
       }
     };
 
-    await axios
+    axios
       .get(favoritesApiEndPoint, config)
       .then(res => {
-        console.log("RES", res.data);
         const data = res.data;
 
         this.setState({ data, currentUserId });
-        console.log("DATA", this.state.data);
       })
       .catch(err => {
         console.log("ERR", err);
@@ -52,6 +49,7 @@ class Favorites extends Component {
         author={d.author._id}
         alt=""
         onClick={() => this.redirectToTarget(d._id)}
+        key={d._id}
       />
     ));
   };

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import uploadSymbol from "../../icons/upload-symbol.png";
 
 const ImageUpload = ({ fileSelectorHandler, imagePreview }) => {
@@ -9,7 +9,11 @@ const ImageUpload = ({ fileSelectorHandler, imagePreview }) => {
       <img src={uploadSymbol} alt="" id="uploadSymbol" />
       <br />
       <input type="file" name="imageUpload" onChange={fileSelectorHandler} />
-      {imagePreview ? <img src={imagePreview} id="imagePreview" /> : <div />}
+      {imagePreview ? (
+        <img src={imagePreview} id="imagePreview" alt="imagePreview" />
+      ) : (
+        <div />
+      )}
     </label>
   );
 };

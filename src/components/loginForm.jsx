@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import Input from "./common/input";
 import MessageBox from "./common/messageBox";
 import axios from "axios";
 import { API_ROOT } from "../api-config";
 import "../styles/appScope.css";
 import "../styles/form.css";
-//import "../styles/loginForm.css";
+import "../styles/loginForm.css";
 
-//const apiEndPoint = "http://localhost:3000/api/auth";
 const apiEndPoint = API_ROOT + "auth";
 
 class LoginForm extends Component {
@@ -18,7 +16,8 @@ class LoginForm extends Component {
       password: ""
     },
     showMessageBox: false,
-    error: ""
+    error: "",
+    loggedIn: false
   };
 
   handleSubmit = async e => {
@@ -27,20 +26,15 @@ class LoginForm extends Component {
     const obj = this.state.data;
 
     const response = await axios.post(apiEndPoint, obj).catch(error => {
-      console.log("ERROR", error.response);
-      // console.log(error.response.data);
       try {
-        console.log(error.response.data);
         this.setState({ error: error.response.data, showMessageBox: true });
       } catch (err) {
-        console.log("here");
-        <Redirect to="/500error" />;
+        console.log(err);
       }
     });
     if (response) {
-      console.log("response");
       await localStorage.setItem("jwtToken", response.data);
-      window.location.reload(true);
+      this.setState({ loggedIn: true });
       await this.props.history.push("/");
     }
   };
@@ -50,7 +44,6 @@ class LoginForm extends Component {
     const data = { ...this.state.data };
     data[attr] = e.target.value;
     this.setState({ data });
-    console.log("HERE", this.state);
   };
 
   closeMessageBox = () => {
@@ -84,7 +77,7 @@ class LoginForm extends Component {
             handleChange={this.handleChange}
           />
           <button id="submitButton" type="submit">
-            Post
+            Login
           </button>
         </form>
       </div>

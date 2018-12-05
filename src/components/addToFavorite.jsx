@@ -16,7 +16,6 @@ class AddFavorite extends Component {
 
   handleStarClick = () => {
     console.log("preclick array", this.props.favoritesArray);
-    const favoritePhoto = this.props.favoritedPhoto;
 
     const config = {
       headers: {
