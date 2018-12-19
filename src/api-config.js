@@ -1,7 +1,7 @@
 let backendHost;
 
 const hostname = window && window.location && window.location.hostname;
-console.log("HOSTNAME", hostname);
+
 if (hostname === "soyum.herokuapp.com") {
   backendHost = "https://soyumapi.herokuapp.com";
 } else {

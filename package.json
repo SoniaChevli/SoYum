@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "jimp": "^0.6.0",
     "joi-browser": "^13.4.0",
     "jwt-decode": "^2.2.0",
     "react": "^16.5.2",

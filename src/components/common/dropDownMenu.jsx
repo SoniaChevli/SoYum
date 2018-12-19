@@ -5,25 +5,25 @@ import downArrow from "../../icons/downArrow.png";
 class DropdownMenu extends Component {
   state = {
     showMenu: false,
-    color: "white"
+    buttonColor: "white"
   };
 
-  showMenu = async event => {
+  showMenu = event => {
     event.preventDefault();
-    await this.setState({ showMenu: true }, () => {
-      this.setState({ buttonColor: "#f97720" });
-      this.setState({ selectedElements: this.props.selectedElements });
+    let showMenu = true;
+    let buttonColor = "#f97720";
+    let selectedElements = this.props.selectedElements;
+    this.setState({ showMenu, buttonColor, selectedElements }, () => {
       document.addEventListener("click", this.closeMenu);
     });
-    console.log("current dropDown State", this.state);
   };
 
   closeMenu = e => {
     try {
       if (!this.dropdownMenu.contains(e.target)) {
-        this.setState({ showMenu: false }, () => {
-          this.setState({ buttonColor: "white" });
-
+        let showMenu = false;
+        let buttonColor = "white";
+        this.setState({ showMenu, buttonColor }, () => {
           document.removeEventListener("click", this.closeMenu);
         });
       }
@@ -55,6 +55,7 @@ class DropdownMenu extends Component {
                 <li id="dropList" key={d}>
                   <input
                     type="checkbox"
+                    onChange={() => {}}
                     checked={this.props.selectedElements.includes(d)}
                     onClick={e => {
                       this.props.handleSelect(e, d);

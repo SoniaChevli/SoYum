@@ -14,14 +14,14 @@
 }
 
 .imagesDelete {
-  /* display: flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
   margin: 0 auto;
   width: fit-content;
   margin-top: 20px;
   display: inline-block;
-  position: relative; */
+  position: relative;
 }
 .imagesDelete {
   margin: 10px;
@@ -29,6 +29,7 @@
   /* height: 20%; */
   height: 20vw;
 }
+
 #deleteButton {
   position: absolute;
   top: 10px;
