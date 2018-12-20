@@ -32,15 +32,15 @@ class MainPage extends Component {
       });
   }
 
-  handleToggledTags = (e, d) => {
-    const selectedElements = [...this.state.toggledTags];
-    if (!selectedElements.includes(d)) {
-      selectedElements.push(d);
+  handleToggledTags = d => {
+    const toggledTags = [...this.state.toggledTags];
+    if (!toggledTags.includes(d)) {
+      toggledTags.push(d);
     } else {
-      const index = selectedElements.indexOf(d);
-      selectedElements.splice(index, 1);
+      const index = toggledTags.indexOf(d);
+      toggledTags.splice(index, 1);
     }
-    this.setState({ toggledTags: selectedElements });
+    this.setState({ toggledTags });
   };
 
   handleSubmit = async e => {
@@ -55,7 +55,6 @@ class MainPage extends Component {
       .catch(err => {
         console.log("ERR", err);
       });
-
     const data = response.data;
     this.setState({ data });
   };
@@ -93,8 +92,8 @@ class MainPage extends Component {
           <SelectedFilters
             toggled={this.state.toggledTags}
             handleFilterClick={() => this.setState({ toggledTags: [] })}
-            handleAllClick={async () =>
-              await this.setState({ toggledTags: [], citySearch: "" })
+            handleAllClick={() =>
+              this.setState({ toggledTags: [], citySearch: "" })
             }
           />
         </form>

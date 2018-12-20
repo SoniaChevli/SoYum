@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/dropDown.css";
 import downArrow from "../../icons/downArrow.png";
-
+import DropDownItems from "./dropDownItems";
 class DropdownMenu extends Component {
   state = {
     showMenu: false,
@@ -28,7 +28,7 @@ class DropdownMenu extends Component {
         });
       }
     } catch (err) {
-      console.log("ERROR", err);
+      console.log("Close Menu Error", err);
     }
   };
 
@@ -50,21 +50,11 @@ class DropdownMenu extends Component {
               this.dropdownMenu = element;
             }}
           >
-            <ul>
-              {this.props.menuItems.map(d => (
-                <li id="dropList" key={d}>
-                  <input
-                    type="checkbox"
-                    onChange={() => {}}
-                    checked={this.props.selectedElements.includes(d)}
-                    onClick={e => {
-                      this.props.handleSelect(e, d);
-                    }}
-                  />
-                  <label style={{ marginLeft: "6px" }}> {d}</label>
-                </li>
-              ))}
-            </ul>
+            <DropDownItems
+              menuItems={this.props.menuItems}
+              selectedElements={this.props.selectedElements}
+              handleSelect={this.props.handleSelect}
+            />
           </div>
         ) : null}
       </div>
