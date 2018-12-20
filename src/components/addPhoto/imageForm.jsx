@@ -34,20 +34,18 @@ class ImageForm extends Component {
       this.setState({ redirect: true });
     }
   }
-  handleChange = async e => {
+  handleChange = e => {
     e.preventDefault();
     const data = { ...this.state.data };
     const attr = e.target.name;
     data[attr] = e.target.value;
-
-    await this.setState({ data });
+    this.setState({ data });
   };
 
   handleSubmit = async e => {
     e.preventDefault();
 
     const obj = this.state.data;
-    console.log("OBJ", obj);
 
     const config = {
       headers: {
@@ -74,7 +72,6 @@ class ImageForm extends Component {
       selectedElements.push(d);
     } else {
       const index = selectedElements.indexOf(d);
-      console.log(index);
       selectedElements.splice(index, 1);
     }
     const data = { ...this.state.data };
@@ -184,7 +181,9 @@ class ImageForm extends Component {
           <div id="added_tags">
             <div id="selectedHeader">Selected Tags:</div>
             {this.state.toggledTags.map(t => (
-              <li id="imageFormTagList">{t}</li>
+              <li id="imageFormTagList" key={t}>
+                {t}
+              </li>
             ))}{" "}
           </div>
           <button id="submitButton" type="submit">

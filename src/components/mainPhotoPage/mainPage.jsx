@@ -32,7 +32,7 @@ class MainPage extends Component {
       });
   }
 
-  handleToggledTags = d => {
+  handleToggledTags = (e, d) => {
     const toggledTags = [...this.state.toggledTags];
     if (!toggledTags.includes(d)) {
       toggledTags.push(d);

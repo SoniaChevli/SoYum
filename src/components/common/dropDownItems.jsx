@@ -9,8 +9,8 @@ const DropDownItems = ({ menuItems, selectedElements, handleSelect }) => {
             type="checkbox"
             onChange={() => {}}
             checked={selectedElements.includes(d)}
-            onClick={() => {
-              handleSelect(d);
+            onClick={e => {
+              handleSelect(e, d);
             }}
           />
           <label style={{ marginLeft: "6px" }}> {d}</label>
