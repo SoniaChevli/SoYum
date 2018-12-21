@@ -76,6 +76,11 @@ img[name="mainPagePhotos"]:hover {
   flex-flow: wrap;
   /* display: inline-block; */
 }
+.noPhotosMessage {
+  padding-top: 50px;
+  font-size: 18px;
+  color: red;
+}
 
 #filterChoices {
   display: flex;

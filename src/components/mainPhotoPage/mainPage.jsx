@@ -17,7 +17,8 @@ class MainPage extends Component {
     toggledTags: [],
     citySearch: "",
     filtered: [],
-    favoritesArray: []
+    favoritesArray: [],
+    noPhotos: false
   };
 
   componentDidMount() {
@@ -56,7 +57,11 @@ class MainPage extends Component {
         console.log("ERR", err);
       });
     const data = response.data;
-    this.setState({ data });
+    let noPhotos;
+    if (data.length === 0) noPhotos = true;
+    else noPhotos = false;
+
+    this.setState({ data, noPhotos });
   };
 
   handleChange = e => {
@@ -97,10 +102,18 @@ class MainPage extends Component {
             }
           />
         </form>
-        <DisplayPhotos
-          photos={this.state.data}
-          filtered={this.state.filtered}
-        />
+        {this.state.noPhotos ? (
+          <div className="noPhotosMessage">
+            {" "}
+            There are no photos with this city/filter combination. Try another
+            city (ex: Boston) and/or another filter (ex: gluten free){" "}
+          </div>
+        ) : (
+          <DisplayPhotos
+            photos={this.state.data}
+            filtered={this.state.filtered}
+          />
+        )}
       </div>
     );
   }
