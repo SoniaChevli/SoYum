@@ -63,7 +63,10 @@ img[name="mainPagePhotos"]:hover {
   margin-top: 6px;
   opacity: 0.8;
 }
-
+.loadingPhotos {
+  font-size: 30px;
+  padding-top: 150px;
+}
 .allImages {
   display: flex;
 

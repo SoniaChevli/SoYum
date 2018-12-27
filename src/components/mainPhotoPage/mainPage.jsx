@@ -18,7 +18,8 @@ class MainPage extends Component {
     citySearch: "",
     filtered: [],
     favoritesArray: [],
-    noPhotos: false
+    noPhotos: false,
+    loadingPhotos: true
   };
 
   // Get all photos from REST API
@@ -27,7 +28,8 @@ class MainPage extends Component {
       .get(apiEndPoint)
       .then(res => {
         const photoData = res.data;
-        this.setState({ photoData });
+        const loadingPhotos = false;
+        this.setState({ photoData, loadingPhotos });
       })
       .catch(err => {
         console.log("ERR", err);
@@ -103,6 +105,9 @@ class MainPage extends Component {
             }
           />
         </form>
+        {this.state.loadingPhotos ? (
+          <div className="loadingPhotos"> Loading Photos... </div>
+        ) : null}
         {this.state.noPhotos ? (
           <div className="noPhotosMessage">
             {" "}
