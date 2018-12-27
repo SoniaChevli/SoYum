@@ -4,7 +4,7 @@ import FavoriteStar from "./favoriteStar";
 import MessageBox from "../common/messageBox";
 import { API_ROOT } from "../../api-config";
 
-let apiEndPoint = API_ROOT + "photos/favorite/";
+const apiEndPoint = API_ROOT + "photos/favorite/";
 
 class AddFavorite extends Component {
   state = {
@@ -23,11 +23,13 @@ class AddFavorite extends Component {
       photoId: this.props.photoId,
       currentUserId: this.props.currentUserId
     };
-    apiEndPoint += this.props.photoId;
+    const changeFavoriteEndPoint = apiEndPoint + this.props.photoId;
+
     axios
-      .put(apiEndPoint, obj, config)
+      .put(changeFavoriteEndPoint, obj, config)
       .then(res => {})
       .catch(err => {
+        this.props.handleFavorite();
         this.setState({ errorAddingFavorite: true });
       });
   };

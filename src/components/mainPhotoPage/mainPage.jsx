@@ -13,7 +13,7 @@ const apiEndPoint = API_ROOT + "photos";
 
 class MainPage extends Component {
   state = {
-    data: [],
+    photoData: [],
     toggledTags: [],
     citySearch: "",
     filtered: [],
@@ -21,12 +21,13 @@ class MainPage extends Component {
     noPhotos: false
   };
 
+  // Get all photos from REST API
   componentDidMount() {
     axios
       .get(apiEndPoint)
       .then(res => {
-        const data = res.data;
-        this.setState({ data });
+        const photoData = res.data;
+        this.setState({ photoData });
       })
       .catch(err => {
         console.log("ERR", err);
@@ -56,12 +57,12 @@ class MainPage extends Component {
       .catch(err => {
         console.log("ERR", err);
       });
-    const data = response.data;
+    const photoData = response.data;
     let noPhotos;
-    if (data.length === 0) noPhotos = true;
+    if (photoData.length === 0) noPhotos = true;
     else noPhotos = false;
 
-    this.setState({ data, noPhotos });
+    this.setState({ photoData, noPhotos });
   };
 
   handleChange = e => {
@@ -110,7 +111,7 @@ class MainPage extends Component {
           </div>
         ) : (
           <DisplayPhotos
-            photos={this.state.data}
+            photos={this.state.photoData}
             filtered={this.state.filtered}
           />
         )}

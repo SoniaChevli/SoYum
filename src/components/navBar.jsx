@@ -1,41 +1,26 @@
 import React, { Component } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import menubar from "../icons/menu.png";
 import "../styles/soYumHeader.css";
 
 class NavBar extends Component {
   state = {
     loggedIn: false,
-    dropDown: false,
-    redirect: false
+    dropDown: false
   };
-
-  // componentDidMount = () => {
-  //   if (localStorage.getItem("jwtToken") && !this.state.loggedIn)
-  //     this.setState({ loggedIn: true });
-  // };
-
-  checkLoggedIn = () => {
+  componentDidMount() {
     if (localStorage.getItem("jwtToken") && !this.state.loggedIn)
       this.setState({ loggedIn: true });
-  };
+  }
+  componentDidUpdate() {
+    if (localStorage.getItem("jwtToken") && !this.state.loggedIn)
+      this.setState({ loggedIn: true });
+  }
 
   handleLogout = () => {
     let loggedIn = false;
-    let redirect = true;
     localStorage.removeItem("jwtToken");
-    this.setState({ loggedIn, redirect });
-  };
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to="/" />;
-    }
-  };
-
-  setRedirect = () => {
-    if (!localStorage.getItem("jwtToken") && this.state.loggedIn)
-      this.setState({ redirect: true });
+    this.setState({ loggedIn });
   };
 
   handleDropDownClick = () => {
@@ -46,9 +31,6 @@ class NavBar extends Component {
   render() {
     return (
       <div className="navBar">
-        {this.renderRedirect()}
-        {this.setRedirect()}
-        {this.checkLoggedIn()}
         <img
           src={menubar}
           alt="menuBar"

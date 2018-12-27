@@ -12,19 +12,21 @@ class DeletePhoto extends Component {
     error: ""
   };
 
-  handleDelete = async () => {
+  handleDelete = () => {
     const config = {
       headers: {
         "x-auth-token": localStorage.getItem("jwtToken")
       }
     };
-    let photoID = this.props.photoId;
-    let finalEndPoint = apiEndPoint + photoID;
-    await axios
+    const photoID = this.props.photoId;
+    const finalEndPoint = apiEndPoint + photoID;
+    axios
       .delete(finalEndPoint, config)
+      .then(() => {
+        this.props.removePhoto();
+        this.props.closeDeletePopUp("true");
+      })
       .catch(err => this.setState({ showMessageBox: true, error: { err } }));
-    this.props.removePhoto();
-    this.props.closeDeletePopUp("true");
   };
 
   closeMessageBox = () => {
@@ -39,7 +41,6 @@ class DeletePhoto extends Component {
           handleDelete={this.handleDelete}
           closeDeletePopUp={this.props.closeDeletePopUp}
         />
-
         {this.state.showMessageBox ? (
           <MessageBox
             messageBox="loginMessageBox"

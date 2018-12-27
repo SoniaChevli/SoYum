@@ -20,23 +20,25 @@ class LoginForm extends Component {
     loggedIn: false
   };
 
-  handleSubmit = async e => {
+  handleSubmit = e => {
     e.preventDefault();
 
     const obj = this.state.data;
 
-    const response = await axios.post(apiEndPoint, obj).catch(error => {
-      try {
-        this.setState({ error: error.response.data, showMessageBox: true });
-      } catch (err) {
-        console.log(err);
-      }
-    });
-    if (response) {
-      await localStorage.setItem("jwtToken", response.data);
-      this.setState({ loggedIn: true });
-      await this.props.history.push("/");
-    }
+    axios
+      .post(apiEndPoint, obj)
+      .then(response => {
+        localStorage.setItem("jwtToken", response.data);
+        this.setState({ loggedIn: true });
+        this.props.history.push("/");
+      })
+      .catch(error => {
+        try {
+          this.setState({ error: error.response.data, showMessageBox: true });
+        } catch (err) {
+          console.log(err);
+        }
+      });
   };
 
   handleChange = e => {

@@ -4,12 +4,14 @@ import { API_ROOT } from "../../api-config";
 import axios from "axios";
 import AddFavorite from "../favoritePhoto/addToFavorite";
 import "../../styles/photoPage.css";
+import PhotoHashTags from "./photoHashTags";
+import PhotoInformation from "./photoInformation";
 
-let photoApiEndPoint = API_ROOT + "photos/";
+const photoApiEndPoint = API_ROOT + "photos/";
 const userApiEndPoint = API_ROOT + "users/me";
 class Photo extends Component {
   state = {
-    data: {
+    photoData: {
       restaurantName: "None",
       restaurantLink: "",
       author: "None",
@@ -30,31 +32,36 @@ class Photo extends Component {
     },
     redirect: false
   };
-  componentDidMount() {
-    let photoIdApiEndPoint = photoApiEndPoint + this.props.location.pathname;
 
+  componentDidMount() {
+    this.retrievePhotoData();
+    this.retrieveUserFavoriteInfo();
+  }
+  retrievePhotoData = () => {
+    const photoIdApiEndPoint = photoApiEndPoint + this.props.location.pathname;
     axios
       .get(photoIdApiEndPoint)
       .then(res => {
-        const data = res.data;
-        this.setState({ data });
+        const photoData = res.data;
+        this.setState({ photoData });
       })
       .catch(err => {
         console.log("ERR", err);
       });
+  };
+  retrieveUserFavoriteInfo = () => {
     if (localStorage.getItem("jwtToken")) {
       const config = {
         headers: {
           "x-auth-token": localStorage.getItem("jwtToken")
         }
       };
-
       axios
         .get(userApiEndPoint, config)
-        .then(async res => {
+        .then(res => {
           let loggedInUserId = res.data._id;
           let favoritedPhoto = false;
-          if (this.state.data.favorites.includes(loggedInUserId))
+          if (this.state.photoData.favorites.includes(loggedInUserId))
             favoritedPhoto = true;
           this.setState({
             loggedInUser: { id: loggedInUserId, favoritedPhoto }
@@ -63,22 +70,6 @@ class Photo extends Component {
         .catch(err => {
           console.log(err);
         });
-    }
-  }
-
-  handleTags = () => {
-    const tags = this.state.data.tags;
-    if (tags.length !== 0) {
-      const final = tags.map(t => (
-        <div
-          class={t.replace(/\s/g, "")}
-          id="hashTags"
-          key={t.replace(/\s/g, "")}
-        >
-          #{t.replace(/\s/g, "")}
-        </div>
-      ));
-      return final;
     }
   };
 
@@ -106,51 +97,22 @@ class Photo extends Component {
     return (
       <div className="photoPage">
         {this.renderRedirect()}
-        <img id="photoPageImage" src={this.state.data.photo} alt="" />
+        <img id="photoPageImage" src={this.state.photoData.photo} alt="" />
         {this.state.loggedInUser.id !== "None" ? (
           <AddFavorite
             starClassName="starPhotoPage"
-            favoritesArray={this.state.data.favorites}
+            favoritesArray={this.state.photoData.favorites}
             currentUserId={this.state.loggedInUser.id}
             handleFavorite={this.handleFavorite}
-            photoId={this.state.data._id}
+            photoId={this.state.photoData._id}
             favoritedPhoto={this.state.loggedInUser.favoritedPhoto}
           />
         ) : null}
         <div className="photoInformation">
-          <header id="imageHeader">
-            <div id="restaurantNameFull">
-              {this.state.data.restaurantLink ? (
-                <a
-                  href={this.state.data.restaurantLink}
-                  id="restName"
-                  className="restLink"
-                >
-                  {" "}
-                  {this.state.data.restaurantName}
-                </a>
-              ) : (
-                <div id="restName"> {this.state.data.restaurantName} </div>
-              )}
-            </div>
-          </header>
-
-          <div id="cityNameFull">{this.state.data.city}</div>
-          <div id="descriptionFull">
-            {" "}
-            <br />
-            {this.state.data.description}
-          </div>
-          <div id="tagsFull">
-            {" "}
-            {this.state.data.tags.map(t => (
-              <li id="hashTag" key={t.replace(/\s/g, "")}>
-                #{t.replace(/\s/g, "")}
-              </li>
-            ))}{" "}
-          </div>
+          <PhotoInformation photoData={this.state.photoData} />
+          <PhotoHashTags tags={this.state.photoData.tags} />
           <div id="authorFull">
-            Picture taken by: {this.state.data.author.userName}
+            Picture taken by: {this.state.photoData.author.userName}
           </div>
         </div>
       </div>
