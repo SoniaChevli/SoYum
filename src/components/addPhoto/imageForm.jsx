@@ -57,7 +57,7 @@ class ImageForm extends Component {
       try {
         this.setState({ error: error.response.data, showMessageBox: true });
       } catch (err) {
-        console.log("here");
+        console.log(err);
       }
     });
 
@@ -81,12 +81,14 @@ class ImageForm extends Component {
 
   fileSelectorHandler = async e => {
     let file = e.target.files[0];
+
     if (!file || file.size >= 14000000)
       return this.setState({ error: "image must be under 14mb" });
     var reader = new FileReader();
     reader.onload = upload => {
       let data = { ...this.state.data };
       data["photo"] = upload.target.result;
+
       this.setState({ data });
     };
     reader.readAsDataURL(file);
