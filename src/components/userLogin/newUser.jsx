@@ -28,6 +28,7 @@ class NewUser extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     const obj = this.state;
+    delete obj.errorMessageBox;
     const response = await axios.post(apiEndPointNewUser, obj).catch(() => {
       let errorMessageBox = { ...this.state.errorMessageBox };
       errorMessageBox["displayCreateAccountError"] = true;

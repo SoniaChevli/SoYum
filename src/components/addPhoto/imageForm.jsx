@@ -66,7 +66,7 @@ class ImageForm extends Component {
     }
   };
 
-  handleToggledTags = async (e, d) => {
+  handleToggledTags = (e, d) => {
     const selectedElements = [...this.state.data.tags];
     if (!selectedElements.includes(d)) {
       selectedElements.push(d);
@@ -76,7 +76,7 @@ class ImageForm extends Component {
     }
     const data = { ...this.state.data };
     data["tags"] = selectedElements;
-    await this.setState({ data, toggledTags: selectedElements });
+    this.setState({ data, toggledTags: selectedElements });
   };
 
   fileSelectorHandler = async e => {
